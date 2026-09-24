@@ -1,0 +1,2 @@
+# Kitchenwhiz – Quote Page
+
