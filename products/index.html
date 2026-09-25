@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Work table – Kitchenwhiz</title>
+<title>Work table – USP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
@@ -20,7 +20,10 @@ a{color:inherit}
 .wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,4.5vw,64px)}
 header{border-bottom:1px solid var(--line)}
 header .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.wordmark{font-weight:800;font-size:22px;letter-spacing:.02em}
+.wordmark{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.wm-name{font-weight:800;font-size:24px;letter-spacing:.04em}
+.wm-tag{font-size:13px;font-weight:500;color:var(--muted)}
+@media (max-width:480px){.wm-tag{display:none}}
 nav{display:flex;gap:28px;font-size:15px;font-weight:500}
 nav a{text-decoration:none;white-space:nowrap} nav a:hover{color:var(--accent)}
 .cart{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink);border-radius:22px;background:transparent;color:var(--ink);cursor:pointer}
@@ -362,7 +365,7 @@ figure{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tray-h));z-
 </head>
 <body>
 <header><div class="wrap">
-<div class="wordmark disp">Kitchenwhiz</div>
+<a class="wordmark" href="#/home" aria-label="USP – the commercial kitchen expert, home"><span class="wm-name disp">USP</span><span class="wm-tag">The commercial kitchen expert</span></a>
 <nav aria-label="Main"><a href="#/home">All products</a><a href="#/c/work-table">Work tables</a><a href="#/c/cabinet-shelf">Shelving</a><a href="#/c/sink">Sinks</a><a href="mailto:info@kitchenwhiz.in">Contact</a></nav>
 <div class="modeswitch" role="group" aria-label="Quote mode"><button data-mode="guided" aria-pressed="true">Show me the way</button><a class="modelink" data-qb-mode="customer" href="https://kitchenwhiz.github.io/usp/quote/?mode=customer">I can build</a><button class="msoon" disabled title="Coming soon">Templates <span class="soon">Soon</span></button><a class="modelink" data-qb-mode="expert" href="https://kitchenwhiz.github.io/usp/quote/?mode=expert">Expert</a></div>
 <button class="cart" id="headCart" aria-label="Open quote"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h11.2L21 7H6.2"></path><circle cx="9.5" cy="19.5" r="1.3"></circle><circle cx="17" cy="19.5" r="1.3"></circle></svg></button>
@@ -648,7 +651,7 @@ figure{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tray-h));z-
 <button class="qclose cpin" id="cPin" aria-pressed="false" aria-label="Pin categories open" title="Pin open"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l-1 5 3 3v2H7v-2l3-3-1-5z"></path><path d="M12 14v6"></path></svg></button>
 <button class="qclose" id="cClose" aria-label="Close categories" title="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></button></div>
 <nav class="clist" id="catList" aria-label="Kitchen Whiz categories"></nav>
-<div class="cver">Page version: 25 Sep 2026 (6)</div>
+<div class="cver">Page version: v1 · 25 Sep 2026 (6) + USP name</div>
 </aside>
 <button class="ctab" id="cTab" aria-label="Open categories" aria-controls="cats"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span class="vt">Categories</span></button>
 <button class="qtab" id="qTab" aria-label="Open quote" aria-controls="quote"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg><span class="vt">Quote</span><span class="badge" id="qBadge">0</span></button>
@@ -1487,7 +1490,7 @@ function showCategory(catKey) {
   $('cHead').textContent = catLabel(catKey);
   $('cSub').textContent = list.length + (list.length === 1 ? ' product' : ' products') + '. Prices exclude GST.';
   $('pgrid').innerHTML = list.map(cardHTML).join('');
-  document.title = catLabel(catKey) + ' \u2013 Kitchenwhiz';
+  document.title = catLabel(catKey) + ' \u2013 USP';
 }
 function showHome() {
   $('cCrumb').textContent = 'Home';
@@ -1497,7 +1500,7 @@ function showHome() {
     const list = productsIn(c.key);
     return cardHTML({ href: '#/c/' + catSlug(c.key), title: c.label, img: CAT_IMGS[c.key], from: Math.min.apply(null, list.map((x) => x.from)), n: list.length }).replace(/ sizes? \u00B7/, list.length === 1 ? ' product \u00B7' : ' products \u00B7');
   }).join('');
-  document.title = 'Kitchen Whiz products \u2013 Kitchenwhiz';
+  document.title = 'Kitchen Whiz products \u2013 USP';
 }
 
 /* product page */
@@ -1531,7 +1534,7 @@ function showProduct(p) {
     if (p.addonImg && p.addonImg[c] != null) pState.img = !on ? p.addonImg[c] : (p.baseImg || 0);
     renderProduct();
   }));
-  document.title = p.title + ' \u2013 Kitchenwhiz';
+  document.title = p.title + ' \u2013 USP';
   renderProduct();
 }
 function productSel() {
@@ -1603,7 +1606,7 @@ function route() {
   if (kind === 'home') { view = 'cat'; cat = null; showHome(); }
   else if (kind === 'c') { const c = CATEGORIES.find((x) => catSlug(x.key) === id); if (c) { view = 'cat'; cat = c.key; showCategory(c.key); } }
   else if (kind === 'p' && id && id !== 'worktable') { const p = CATALOG.find((x) => x.id === id); if (p) { view = 'prod'; cat = p.cat; showProduct(p); } }
-  if (view === 'wt') document.title = 'Work table \u2013 Kitchenwhiz';
+  if (view === 'wt') document.title = 'Work table \u2013 USP';
   if (view !== 'wt') revealCats('mini');
   $('viewWT').hidden = view !== 'wt';
   $('viewCat').hidden = view !== 'cat';
