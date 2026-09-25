@@ -1,0 +1,1679 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Work table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#F4F3EF;--ink:#16181A;--muted:#55585C;--body:#33363A;--line:#D9D6CE;--card:#FAF9F6;--card-on:#FFFFFF;--field:#FFFFFF;--accent:#1F4FA0;--on-accent:#FFFFFF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#ECEBE6;--muted:#A3A6AA;--body:#C9CACB;--line:#33373C;--card:#1B1E22;--card-on:#22262B;--field:#1B1E22;--accent:#7FA6EA;--on-accent:#0E1420;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#ECEBE6;--muted:#A3A6AA;--body:#C9CACB;--line:#33373C;--card:#1B1E22;--card-on:#22262B;--field:#1B1E22;--accent:#7FA6EA;--on-accent:#0E1420;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.disp{font-family:Archivo,"Arial Narrow",Arial,sans-serif}
+a{color:inherit}
+.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(16px,4.5vw,64px)}
+header{border-bottom:1px solid var(--line)}
+header .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.wordmark{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.wm-name{font-weight:800;font-size:24px;letter-spacing:.04em}
+.wm-tag{font-size:13px;font-weight:500;color:var(--muted)}
+@media (max-width:480px){.wm-tag{display:none}}
+nav{display:flex;gap:28px;font-size:15px;font-weight:500}
+nav a{text-decoration:none;white-space:nowrap} nav a:hover{color:var(--accent)}
+.cart{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink);border-radius:22px;background:transparent;color:var(--ink);cursor:pointer}
+.hero{display:flex;flex-wrap:wrap;gap:clamp(24px,3vw,48px);padding:clamp(24px,4vw,48px) 0;align-items:flex-start}
+.info{flex:1 1 340px;max-width:560px;display:flex;flex-direction:column;gap:22px;padding-top:12px}
+.crumb{font-size:13px;color:var(--muted)}
+h1{margin:0;font-weight:700;font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-.01em}
+.price{font-weight:700;font-size:32px}
+.lede{margin:0;font-size:17px;line-height:1.55;color:var(--body)}
+.lab{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.field{display:flex;flex-direction:column;gap:10px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{height:44px;padding:0 18px;border-radius:4px;border:1px solid var(--ink);background:transparent;color:var(--ink);font-size:15px;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+select{height:44px;width:240px;max-width:100%;padding:0 12px;border:1px solid var(--ink);border-radius:4px;background:var(--field);color:var(--ink);font-size:15px;cursor:pointer}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:15px}
+.specs div{display:flex;flex-direction:column;gap:2px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{height:52px;padding:0 30px;border-radius:4px;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+.btn.pri{background:var(--ink);color:var(--bg);border:none}
+.btn.sec{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn:focus-visible,.pill:focus-visible,.card:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+figure{margin:0;flex:1 1 360px;display:flex;justify-content:flex-start;min-width:0}
+.art{position:relative;width:100%;max-width:720px;margin-right:auto;aspect-ratio:910/774}
+#artSvg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.tbl{position:absolute;left:7.284%;top:2.584%;width:87.513%;height:88.372%;display:block}
+.dims{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.pricerow{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.sizes{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end}
+.listhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.list{display:flex;flex-direction:column;gap:6px}
+.card{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;text-align:left;font:inherit;color:var(--ink);border-radius:6px;cursor:pointer;border:1px solid var(--line);background:var(--card);transition:border-color .15s,background .15s}
+.card:hover{border-color:var(--ink)}
+.card[aria-pressed="true"]{border:2px solid var(--accent);padding:9px 13px;background:var(--card-on)}
+.card[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.card[aria-disabled="true"]:hover{border-color:var(--line)}
+.card .ic{width:30px;height:30px;flex-shrink:0}
+.box{width:22px;height:22px;flex-shrink:0;border:2px solid var(--ink);border-radius:4px;display:flex;align-items:center;justify-content:center}
+.box svg{display:none}
+.card[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
+.card[aria-pressed="true"] .box svg{display:block}
+.txt{display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0}
+.nm{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap} .nm b{font-size:15px;font-weight:600} .nm span{font-size:12px;color:var(--muted)}
+.ds{font-size:13px;line-height:1.4;color:var(--muted)}
+.need{font-size:12px;font-weight:600;display:none}
+.card[aria-disabled="true"] .need{display:block}
+.pr{font-size:14px;white-space:nowrap}
+.tot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.tot .n{font-size:14px;color:var(--muted)} .tot .t{font-weight:700;font-size:26px}
+
+/* brand buttons (same as the quote builder) */
+:root{--tray-h:0px}
+body.tray-on{--tray-h:64px}
+.brandbar{padding-top:16px}
+.brands{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:clamp(8px,1.4vw,16px);overflow-x:auto;padding:4px 2px 10px}
+.brand{position:relative;border:0;padding:0;cursor:pointer;border-radius:10px;overflow:hidden;aspect-ratio:2/1;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 0 0 1px var(--line);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}
+.brand img{width:100%;height:100%;object-fit:contain;display:block}
+.brand[data-key="kitchenwhiz"] img{padding:6% 8%}
+.brand[data-key="barwhiz"] img{padding:4%}
+.brand[data-key="usp"] img{padding:4% 6%}
+.brand:not(:disabled):hover{transform:translateY(-2px)}
+.brand:disabled{cursor:not-allowed;filter:grayscale(1) opacity(.5)}
+.brand.active{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--accent)}
+.tray{position:fixed;left:0;right:0;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.08);padding-top:env(safe-area-inset-top,0px);transform:translateY(-110%);visibility:hidden;transition:transform .22s ease,visibility 0s linear .22s}
+.tray.show{transform:none;visibility:visible;transition:transform .22s ease}
+.tray .wrap{height:64px;display:flex;align-items:center;gap:10px;overflow-x:auto}
+.tray .brand{aspect-ratio:auto;height:44px;width:clamp(96px,14vw,160px);flex-shrink:0;border-radius:8px}
+.tray .brand img{padding:4px 10px !important}
+.tray .brand.active{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+@media (prefers-reduced-motion:reduce){.tray,.tray.show,.brand{transition:none}}
+.tray .traymodes{margin-left:auto}
+.trayhide{margin-left:8px;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:22px;background:transparent;color:var(--ink);cursor:pointer}
+.trayhide:hover{border-color:var(--ink)}
+.traytab{position:fixed;top:0;right:clamp(16px,4.5vw,64px);z-index:21;width:48px;height:28px;padding-top:env(safe-area-inset-top,0px);box-sizing:content-box;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;background:var(--bg);color:var(--ink);cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.08);transform:translateY(-120%);visibility:hidden;transition:transform .2s ease,visibility 0s linear .2s}
+.traytab.show{transform:none;visibility:visible;transition:transform .2s ease}
+.traytab:hover{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.traytab,.traytab.show{transition:none}}
+
+/* product renders are stored mirrored so they face right, like the work table drawing */
+/* ---------- catalogue: category grid + product page ---------- */
+[hidden]{display:none !important}
+.crumb a{color:inherit;text-decoration:none} .crumb a:hover{color:var(--accent);text-decoration:underline}
+.catview{padding:clamp(24px,4vw,48px) 0;display:flex;flex-direction:column;gap:12px}
+.catview h1{margin:0}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:12px}
+.pcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.pcard:hover{border-color:var(--ink);transform:translateY(-2px)}
+.pcard .pimg{aspect-ratio:4/3;background:#FFFFFF;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line)}
+.pcard .pimg img{max-width:100%;max-height:100%;object-fit:contain;padding:10px;box-sizing:border-box}
+.pcard .pmeta{padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.pcard .pname{font-weight:600;font-size:16px}
+.pcard .pfrom{font-size:13px;color:var(--muted)}
+.pcard .ptag{align-self:flex-start;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:999px;background:var(--accent);color:var(--on-accent)}
+.gal{flex-direction:column;gap:10px}
+.gal .gmain{width:100%;max-width:720px;aspect-ratio:1/1;background:#FFFFFF;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gal .gmain img{max-width:100%;max-height:100%;object-fit:contain;padding:16px;box-sizing:border-box}
+.gal .gstage{position:relative;flex:none}
+.gal .gstage img{display:block;width:100%;height:100%;max-width:none;max-height:none;padding:0;object-fit:fill}
+.gdims{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.gdims text{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;fill:#1F4FA0;paint-order:stroke;stroke:#FFFFFF;stroke-width:8px;stroke-linejoin:round}
+.gthumbs{display:flex;gap:8px;flex-wrap:wrap}
+.gthumbs button{width:72px;height:60px;padding:0;border:1px solid var(--line);border-radius:6px;background:#FFFFFF;cursor:pointer;overflow:hidden}
+.gthumbs button[aria-pressed="true"]{border:2px solid var(--accent)}
+.gthumbs img{width:100%;height:100%;object-fit:contain;padding:3px;box-sizing:border-box}
+.vlist{display:flex;flex-direction:column;gap:6px;max-height:360px;overflow-y:auto;padding:2px}
+.vrow{display:grid;grid-template-columns:22px minmax(88px,auto) 1fr auto;align-items:center;gap:12px;width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.vrow:hover{border-color:var(--ink)}
+.vrow[aria-checked="true"]{border:2px solid var(--accent);padding:8px 11px;background:var(--card-on)}
+.vrow .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--ink);box-sizing:border-box}
+.vrow[aria-checked="true"] .dot{border:6px solid var(--accent)}
+.vrow .vc{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;font-weight:500}
+.vrow .vs{font-size:13px;color:var(--body)} .vrow .vs small{display:block;color:var(--muted);font-size:12px}
+.vrow .vp{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:14px;white-space:nowrap}
+.pspec ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px;line-height:1.5;color:var(--body)}
+.pcardx[aria-disabled="true"] .need{display:block}
+.card .na{font-size:12px;color:var(--muted);font-weight:600}
+@media (max-width:820px){.gal .gmain{max-height:36vh;aspect-ratio:auto;height:36vh} .gthumbs{justify-content:center} .gthumbs button{width:52px;height:44px}}
+
+/* ---------- categories tray (left side) ---------- */
+.cpanel{position:fixed;left:0;top:var(--tray-h);bottom:0;width:min(280px,86vw);z-index:15;background:var(--card-on);border-right:1px solid var(--line);box-shadow:8px 0 24px rgba(0,0,0,.08);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px);transform:translateX(-105%);visibility:hidden;transition:transform .25s ease,top .22s ease,visibility 0s linear .25s}
+.cpanel.open{transform:none;visibility:visible;transition:transform .25s ease,top .22s ease}
+.chead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.chead h2{margin:0;font-weight:700;font-size:24px}
+.cbrand{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.cver{padding:8px 16px 12px;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
+.cpanel.mini .cver{display:none}
+.clist{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.cat{display:flex;align-items:center;gap:12px;width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;text-align:left;cursor:pointer;text-decoration:none}
+.cat:hover:not(:disabled){border-color:var(--ink)}
+.cat .cimg{width:64px;height:48px;flex-shrink:0;border-radius:6px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cat .cimg img{width:100%;height:100%;object-fit:contain;padding:3px;box-sizing:border-box}
+.cat .cname{font-size:15px;font-weight:600;flex-grow:1}
+.cat .soon{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:var(--line);color:var(--ink)}
+.cat[aria-current="page"]{border:2px solid var(--accent);padding:7px;background:var(--card-on)}
+.cat:disabled{cursor:not-allowed}
+.cat:disabled .cimg,.cat:disabled .cname{opacity:.5}
+.cat:disabled .cimg{filter:grayscale(1)}
+.ctab{position:fixed;left:0;top:50%;z-index:14;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid var(--line);border-left:0;border-radius:0 10px 10px 0;background:var(--card-on);color:var(--ink);cursor:pointer;box-shadow:4px 0 12px rgba(0,0,0,.08);font:inherit;font-size:13px;font-weight:600;transition:transform .2s ease}
+.ctab .vt{writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;text-transform:uppercase}
+.ctab:hover{color:var(--accent)}
+body.cats-open .ctab{transform:translate(-110%,-50%);visibility:hidden}
+body.quote-full .cpanel,body.quote-full .ctab{display:none}
+
+/* mini rail: the categories tray shrinks to icons + short codes after a click on the page */
+
+.cpin[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cpanel.mini .cpin{display:none}
+.cpanel.peek{transform:none;visibility:visible;width:min(280px,86vw);box-shadow:8px 0 24px rgba(0,0,0,.12)}
+body.cats-none .cpanel,body.cats-none .ctab{display:none}
+.cedge{position:fixed;left:0;top:0;bottom:0;width:14px;z-index:13}
+body.cats-none .cedge,body.cats-open .cedge,body.cats-mini .cedge{display:none}
+.cpanel.flashc{animation:flashc 1s ease}
+@keyframes flashc{0%{box-shadow:inset 0 0 0 3px var(--accent)}100%{box-shadow:inset 0 0 0 0 transparent}}
+.cini,.cexpand,.cat .cabbr{display:none}
+.cpanel{transition:transform .25s ease,top .22s ease,width .2s ease,visibility 0s linear .25s}
+.cpanel.mini{transform:none;visibility:visible;width:84px;box-shadow:none;transition:transform .25s ease,top .22s ease,width .2s ease}
+.cpanel.mini .chead{flex-direction:column;gap:6px;padding:10px 6px}
+.cpanel.mini .cfull{display:none}
+.cpanel.mini .cini{display:block;font-family:Archivo,"Arial Narrow",sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em}
+.cpanel.mini .cexpand{display:flex}
+.cpanel.mini .qclose{width:36px;height:36px}
+.cpanel.mini .clist{padding:8px 6px;gap:6px}
+.cpanel.mini .cat{flex-direction:column;align-items:center;gap:4px;padding:6px 4px}
+.cpanel.mini .cat[aria-current="page"]{padding:5px 3px}
+.cpanel.mini .cat .cimg{width:56px;height:42px}
+.cpanel.mini .cat .cname,.cpanel.mini .cat .soon{display:none}
+.cpanel.mini .cat .cabbr{display:block;font-size:11px;font-weight:600;line-height:1.2;text-align:center;max-width:100%;overflow-wrap:anywhere}
+body.cats-mini{padding-left:84px}
+body.cats-mini .ctab{transform:translate(-110%,-50%);visibility:hidden}
+@media (min-width:1280px){body.cats-open:not(.quote-open){padding-left:280px} body.cats-open:not(.quote-open) .cpanel{box-shadow:none}}
+@media (min-width:1600px){body.cats-open{padding-left:280px} body.cats-open .cpanel{box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.cpanel,.cpanel.open,.ctab{transition:none}}
+
+/* ---------- quote tray (right side) ---------- */
+:root{--q-w:min(420px,100vw)}
+.qpanel{position:fixed;right:0;top:var(--tray-h);bottom:0;width:var(--q-w);z-index:15;background:var(--card-on);border-left:1px solid var(--line);box-shadow:-8px 0 24px rgba(0,0,0,.08);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px);transform:translateX(105%);visibility:hidden;transition:transform .25s ease,top .22s ease,visibility 0s linear .25s}
+.qpanel.open{transform:none;visibility:visible;transition:transform .25s ease,top .22s ease}
+.qhead{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.qhead h2{margin:0;font-weight:700;font-size:26px}
+.qnum{font-size:13px;color:var(--muted);flex-grow:1}
+.qclose{width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:20px;background:transparent;color:var(--ink);cursor:pointer}
+.qclose:hover{border-color:var(--ink)}
+.qbody{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:14px}
+.qmeta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qmeta input{grid-column:span 2;height:40px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink);font:inherit;font-size:14px;min-width:0}
+.qmeta input.half{grid-column:span 1}
+.qmeta input:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.qempty{padding:24px 12px;text-align:center;color:var(--muted);font-size:14px;border:1px dashed var(--line);border-radius:8px}
+.qitem{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;background:var(--card)}
+.qitem .ibrand:empty{display:none}
+.qitem .ibrand{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.irow{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.irow .amt{font-family:"IBM Plex Mono",ui-monospace,monospace;white-space:nowrap}
+.iname{font-weight:600;font-size:15px}
+.isub{font-size:13px;color:var(--muted)}
+.iadds{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.iadds .irow{font-size:13px;color:var(--body)}
+.iunit{border-top:1px dashed var(--line);padding-top:6px;font-size:13px}
+.ifinal{font-size:12px;color:var(--muted)} .ifinal b{color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500}
+.ifoot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:4px}
+.ictrl{display:flex;align-items:center;gap:4px}
+.ictrl button{width:32px;height:32px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);cursor:pointer;font-size:16px}
+.ictrl .qty{width:48px;height:32px;text-align:center;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink);font:inherit}
+.ictrl .remove{width:auto;padding:0 10px;font-size:13px;margin-left:6px}
+.iline b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;font-size:15px}
+.iline .ilabel{font-size:12px;color:var(--muted);margin-right:8px}
+.qitem .itop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.qitem .icode{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.qitem .imove{display:flex;gap:4px;flex:none}
+.qitem .mv{height:26px;min-width:26px;padding:0 6px;border:1px solid var(--line);background:var(--card);border-radius:6px;cursor:pointer;font-size:11px;line-height:1;color:var(--ink)}
+.qitem .mv.edit{font-size:12px;font-weight:600;padding:0 9px;color:var(--accent)}
+.qitem .mv:hover:not([disabled]){border-color:var(--accent)}
+.qitem .mv[disabled]{opacity:.35;cursor:default}
+.qedit{margin:6px 0 2px;padding:10px;border:1px solid var(--accent);border-radius:8px;display:grid;gap:8px;background:var(--card-on)}
+.qedit-h{font-weight:600;font-size:14px}
+.qedit-list{display:grid;grid-template-columns:1fr;gap:6px}
+.optitem{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;cursor:pointer;background:var(--card);font-size:14px}
+.optitem:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--card) 82%,var(--accent) 18%)}
+.optitem input{width:18px;height:18px;accent-color:var(--accent);margin:0;flex-shrink:0}
+.optitem .oname{font-weight:600}
+.optitem .ocode{font-size:12px;color:var(--muted);font-family:"IBM Plex Mono",ui-monospace,monospace}
+.optitem .oprice{margin-left:auto;color:var(--muted);font-size:13px;white-space:nowrap;font-family:"IBM Plex Mono",ui-monospace,monospace}
+.optitem.locked{opacity:.5;cursor:not-allowed}
+.optitem .oneed{display:block;font-size:11px;color:var(--muted);font-weight:600}
+.qedit-act{display:flex;justify-content:flex-end;gap:6px}
+.qedit-act .btn{height:34px;padding:0 12px;font-size:13px}
+.pqty{display:flex;align-items:center;height:52px;border:1px solid var(--ink);border-radius:4px;overflow:hidden}
+.pqty button{width:44px;height:100%;border:0;background:transparent;color:var(--ink);font-size:20px;cursor:pointer}
+.pqty button:disabled{opacity:.35;cursor:default}
+.pqty button:not(:disabled):hover{background:var(--card)}
+.pqty input{width:52px;height:100%;border:0;border-left:1px solid var(--line);border-right:1px solid var(--line);background:var(--field);color:var(--ink);text-align:center;font:inherit;font-size:17px;font-weight:600;-moz-appearance:textfield}
+.pqty input::-webkit-inner-spin-button,.pqty input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.pqty input:focus-visible,.pqty button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.qitems{display:flex;flex-direction:column;gap:10px}
+.metatop{grid-column:span 2;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.metanote{margin:0;font-size:13px;color:var(--muted)}
+.metanote.err{color:#B42318;font-weight:600}
+.metahint{grid-column:span 2;margin:0;font-size:13px;color:#B42318}
+.qmeta input.warn{border-color:#B42318}
+.linkbtn{border:0;background:none;color:var(--accent);cursor:pointer;font:inherit;font-weight:600;padding:4px 0}
+.linkbtn.small{font-size:13px;padding:0;flex:none}
+.linkbtn:hover{text-decoration:underline}
+#clearDetails.armed{color:#B42318}
+.loadrow{display:flex;justify-content:flex-end;margin:-4px 0 0}
+.loadreport{margin:0;font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+.loadreport.warn{color:var(--ink);border-color:#C2410C}
+.sharenote{margin:2px 0 0;font-size:13px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.sharenote a{color:var(--accent);font-weight:600;margin-left:4px}
+#qClear.armed{background:#9A2F2F;border-color:#9A2F2F;color:#fff}
+.fsbtn{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 10px;border:1px solid var(--line);background:transparent;border-radius:8px;color:var(--ink);cursor:pointer;font:inherit;font-size:13px;font-weight:600;flex-shrink:0}
+.fsbtn:hover{border-color:var(--accent)}
+.fsbtn svg{width:16px;height:16px}
+.fsbtn .i-close,.fsbtn .fslabel{display:none}
+.qpanel.full .fsbtn .i-open{display:none}
+.qpanel.full .fsbtn .i-close,.qpanel.full .fsbtn .fslabel{display:inline}
+.qpanel.full{top:0;left:0;width:100%;z-index:50;border-left:0;box-shadow:none;padding-top:env(safe-area-inset-top,0px)}
+.qpanel.full .qhead,.qpanel.full .qbody,.qpanel.full .qfoot{width:100%;max-width:980px;margin:0 auto}
+.qpanel.full .qhead h2{font-size:32px}
+.qpanel.full .qfoot{border-top:1px solid var(--line)}
+.qpanel.full .qacts{grid-template-columns:repeat(4,1fr)}
+body.quote-full{overflow:hidden}
+@media (max-width:620px){.qpanel.full .qacts{grid-template-columns:1fr 1fr}}
+.modeswitch{display:inline-flex;border:1px solid var(--line);border-radius:8px;padding:3px;gap:2px;background:var(--card)}
+.modeswitch button,.modeswitch .modelink{border:0;background:transparent;color:var(--muted);font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.modeswitch button:not(:disabled):hover,.modeswitch .modelink:hover{color:var(--ink)}
+.modeswitch button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.modeswitch .msoon{cursor:not-allowed;opacity:.55}
+.modeswitch .soon{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 6px;border-radius:999px;background:var(--line);color:var(--ink)}
+header .wrap{gap:16px}
+header .wrap > .modeswitch{margin-left:auto}
+.brand .blabel{display:none}
+body.expert .brand{aspect-ratio:auto;height:52px;background:var(--card) !important;padding:0 12px}
+body.expert .brand img{display:none}
+body.expert .brand .blabel{display:block;font-family:Archivo,"Arial Narrow",sans-serif;font-weight:700;font-size:17px;color:var(--ink);white-space:nowrap}
+body.expert .brand.active{background:var(--ink) !important}
+body.expert .brand.active .blabel{color:var(--bg)}
+body.expert .tray .brand{height:40px}
+body.expert .tray .brand .blabel{font-size:15px}
+body.expert .hero figure{display:none}
+body.expert .info{max-width:none}
+body.expert .card .ic{display:none}
+body.expert .card .ds{display:none}
+.custom{border:1px dashed var(--line);border-radius:8px;padding:0 12px}
+.custom summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--accent);padding:10px 0}
+.cform{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-bottom:12px}
+.cform .cwide{grid-column:span 2}
+.cform .btn{grid-column:span 2;height:40px;font-size:14px}
+body:not(.expert) .custom{display:none}
+.qfield{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.qfield input{height:36px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink);font:inherit;font-size:14px;font-weight:400;min-width:0}
+.qitem.moved{animation:moved .6s ease}
+@keyframes moved{from{box-shadow:0 0 0 3px var(--accent)}to{box-shadow:0 0 0 0 transparent}}
+.qpanel.flashq{animation:flashq .9s ease}
+@keyframes flashq{0%{box-shadow:-8px 0 24px rgba(0,0,0,.08),inset 0 0 0 3px var(--accent)}100%{box-shadow:-8px 0 24px rgba(0,0,0,.08),inset 0 0 0 0 transparent}}
+.cartfab{position:fixed;right:clamp(16px,3vw,28px);bottom:calc(env(safe-area-inset-bottom,0px) + 20px);z-index:16;display:flex;align-items:center;gap:8px;height:52px;padding:0 18px 0 16px;border:0;border-radius:26px;background:var(--ink);color:var(--bg);font:inherit;font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2);transform:translateY(160%);transition:transform .2s ease}
+.cartfab.show{transform:none}
+.cartfab .ccount{min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:12px}
+.cartfab .ctotal{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500}
+.totop{position:fixed;right:clamp(16px,3vw,28px);bottom:calc(env(safe-area-inset-bottom,0px) + 20px);z-index:16;width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card-on);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.12);opacity:0;visibility:hidden;transition:opacity .2s ease,bottom .2s ease,visibility 0s linear .2s}
+.totop.show{opacity:1;visibility:visible;transition:opacity .2s ease,bottom .2s ease}
+.totop.lifted{bottom:calc(env(safe-area-inset-bottom,0px) + 84px)}
+body.quote-open .cartfab,body.quote-full .totop,body.quote-open .totop{display:none}
+@media (max-width:980px){.tray .traymodes{display:none} .trayhide{margin-left:auto}}
+@media (max-width:1100px){header .wrap{height:auto;min-height:72px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px} header .wrap > .modeswitch{order:3;margin-left:0;width:100%;overflow-x:auto}}
+@media (max-width:620px){.modeswitch button,.modeswitch .modelink{padding:6px 9px;font-size:12px}}
+@media (max-width:480px){header .wrap > .modeswitch{display:grid;grid-template-columns:1fr 1fr;overflow:visible} .modeswitch button,.modeswitch .modelink{justify-content:center;padding:8px 6px}}
+@media (prefers-reduced-motion:reduce){.cartfab,.totop,.qitem.moved,.qpanel.flashq{transition:none;animation:none}}
+.qfoot{border-top:1px solid var(--line);padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.qfoot .row{display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.qfoot .row span:last-child{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.qfoot .grand{font-size:18px;font-weight:700}
+.qfoot label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.qacts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:4px}
+.qacts .btn{height:42px;padding:0 10px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.qacts .btn.warn{border-color:#9A2F2F;color:#9A2F2F}
+.qtab{position:fixed;right:0;top:50%;z-index:14;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid var(--line);border-right:0;border-radius:10px 0 0 10px;background:var(--card-on);color:var(--ink);cursor:pointer;box-shadow:-4px 0 12px rgba(0,0,0,.08);font:inherit;font-size:13px;font-weight:600;transition:transform .2s ease}
+.qtab .vt{writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em;text-transform:uppercase}
+.qtab .badge{min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:12px}
+.qtab:hover{color:var(--accent)}
+body.quote-open .qtab{transform:translate(110%,-50%);visibility:hidden}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translate(-50%,160%);z-index:30;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;transition:transform .2s ease}
+.toast.show{transform:translate(-50%,0)}
+@media (min-width:1280px){body.quote-open{padding-right:420px} body.quote-open .qpanel{box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.qpanel,.qpanel.open,.qtab,.toast{transition:none}}
+@media print{
+  body{padding:0 !important;background:#fff;color:#000}
+  body > *:not(#quote){display:none !important}
+  #quote{position:static;transform:none;visibility:visible;width:auto;border:0;box-shadow:none;display:block}
+  .qbody{overflow:visible}
+  .cpanel,.ctab,.qclose,.qacts,.ictrl,.qtab,.toast,.imove,.qedit,.fsbtn,.loadrow,.loadreport,.sharenote,.metatop,.metahint,.custom,.cartfab,.totop{display:none !important}
+  .qmeta input{border:0;padding:0;height:auto}
+  .qmeta input:placeholder-shown{display:none}
+  .qitem{break-inside:avoid;background:#fff}
+}
+@media (min-width:821px){figure{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tray-h) + 16px);align-self:flex-start}}
+@media (max-width:820px){nav{display:none} .info{max-width:none} .specs{grid-template-columns:1fr}
+figure{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tray-h));z-index:2;background:var(--bg);justify-content:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.art{width:min(100%,calc(36vh * 910 / 774));margin:0 auto}}
+.brandbar,.tray,.traytab,.cpanel,.ctab,.cver{display:none !important}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="wordmark"><span class="wm-name disp">Work table</span><span class="wm-tag">Preview for feedback</span></div>
+<button class="cart" id="headCart" aria-label="Open quote"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h11.2L21 7H6.2"></path><circle cx="9.5" cy="19.5" r="1.3"></circle><circle cx="17" cy="19.5" r="1.3"></circle></svg></button>
+</div></header>
+<div class="wrap brandbar" hidden><nav class="brands" id="brands" aria-label="Brands"></nav></div>
+<div class="tray" id="tray" aria-hidden="true"><div class="wrap"><nav id="trayBrands" aria-label="Brands" style="display:flex;gap:10px;align-items:center"></nav>
+<div class="modeswitch traymodes" role="group" aria-label="Quote mode"><button data-mode="guided" aria-pressed="true">Show me the way</button><a class="modelink" data-qb-mode="customer" href="https://kitchenwhiz.github.io/usp/quote/?mode=customer">I can build</a><button class="msoon" disabled title="Coming soon">Templates <span class="soon">Soon</span></button><a class="modelink" data-qb-mode="expert" href="https://kitchenwhiz.github.io/usp/quote/?mode=expert">Expert</a></div>
+<button class="trayhide" id="trayHide" aria-label="Hide brand tray" title="Hide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button></div></div>
+<button class="traytab" id="trayTab" aria-label="Show brand tray" title="Show brands"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+<main class="wrap">
+<section class="hero" id="viewWT">
+<figure><div class="art">
+<svg id="artSvg" viewBox="15 -20 910 774" role="img" aria-label="Stainless steel work table with a braced base: side and rear rails, open front">
+<g transform="matrix(-1 0 0 1 851 0)">
+
+<defs>
+<linearGradient id="steelLeg" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" style="stop-color: #8E8E8A"></stop>
+<stop offset="0.35" style="stop-color: #EDEDEA"></stop>
+<stop offset="0.7" style="stop-color: #B9B9B4"></stop>
+<stop offset="1" style="stop-color: #85857F"></stop>
+</linearGradient>
+<linearGradient id="steelEdge" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" style="stop-color: #D8D8D3"></stop>
+<stop offset="1" style="stop-color: #9A9A95"></stop>
+</linearGradient>
+<pattern id="granite" width="14" height="14" patternUnits="userSpaceOnUse">
+<rect width="14" height="14" style="fill: #505154"></rect>
+<circle cx="2" cy="3" r="0.9" style="fill: #8A8B8E"></circle>
+<circle cx="9" cy="6" r="0.6" style="fill: #2E2F31"></circle>
+<circle cx="12" cy="12" r="0.8" style="fill: #9C9DA0"></circle>
+<circle cx="5" cy="11" r="0.5" style="fill: #6C6D70"></circle>
+<circle cx="7" cy="1" r="0.5" style="fill: #3A3B3D"></circle>
+<circle cx="13" cy="4" r="0.4" style="fill: #B5B6B8"></circle>
+</pattern>
+</defs>
+<g style="stroke: #5E5F5C; stroke-width: 0.8">
+<rect x="182" y="40" width="22" height="422" rx="2" style="fill: url(#steelLeg)"></rect>
+<rect x="185" y="462" width="16" height="11" rx="2" style="fill: #2B2D30"></rect>
+</g>
+<g data-show="3S" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="204,43 764,113 764,457 204,387" style="fill: #BDBDB8"></polygon>
+<polygon points="79,190 182,48 182,389 79,500" style="fill: #CFCFCA"></polygon>
+</g>
+</g>
+<g style="stroke-linecap: round; fill: none">
+<line x1="193" y1="347" x2="775" y2="423" style="stroke: #7D7D78; stroke-width: 12"></line>
+<line x1="193" y1="345" x2="775" y2="421" style="stroke: #C9C9C4; stroke-width: 8"></line>
+<line x1="193" y1="343" x2="775" y2="419" style="stroke: #EEEEEB; stroke-width: 2.5"></line>
+<line x1="68" y1="459" x2="193" y2="347" style="stroke: #7D7D78; stroke-width: 13"></line>
+<line x1="68" y1="457" x2="193" y2="345" style="stroke: #C9C9C4; stroke-width: 9"></line>
+<line x1="67" y1="455" x2="192" y2="343" style="stroke: #EEEEEB; stroke-width: 3"></line>
+</g>
+<g style="stroke: #5E5F5C; stroke-width: 0.8">
+<rect x="764" y="118" width="22" height="420" rx="2" style="fill: url(#steelLeg)"></rect>
+<rect x="767" y="538" width="16" height="12" rx="2" style="fill: #2B2D30"></rect>
+</g>
+<g style="stroke-linecap: round; fill: none">
+<line x1="650" y1="533" x2="775" y2="423" style="stroke: #7D7D78; stroke-width: 14"></line>
+<line x1="650" y1="531" x2="775" y2="421" style="stroke: #C9C9C4; stroke-width: 10"></line>
+<line x1="649" y1="529" x2="774" y2="419" style="stroke: #EEEEEB; stroke-width: 3"></line>
+</g>
+<g data-show="U1" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="68,459 193,347 775,423 650,533" style="fill: #FBF8F3"></polygon>
+<polygon points="68,459 650,533 650,546 68,472" style="fill: url(#steelEdge)"></polygon>
+<polygon points="650,533 775,423 775,436 650,546" style="fill: #B4B4AF"></polygon>
+</g>
+</g>
+<g data-show="U2" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="68,326 193,214 775,290 650,400" style="fill: #FBF8F3"></polygon>
+<polygon points="68,326 650,400 650,413 68,339" style="fill: url(#steelEdge)"></polygon>
+<polygon points="650,400 775,290 775,303 650,413" style="fill: #B4B4AF"></polygon>
+</g>
+</g>
+<g data-show="3S" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="661,258 764,165 764,463 661,573" style="fill: #C6C6C1"></polygon>
+</g>
+</g>
+<g data-show="D" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="79,196 639,265 639,568 79,499" style="fill: #D2D2CD"></polygon>
+<line x1="359" y1="231" x2="359" y2="534"></line>
+<rect x="341" y="358" width="7" height="46" rx="3" style="fill: #8E8E8A"></rect>
+<rect x="370" y="362" width="7" height="46" rx="3" style="fill: #8E8E8A"></rect>
+</g>
+</g>
+<g style="stroke: #5E5F5C; stroke-width: 0.8">
+<rect x="57" y="166" width="22" height="408" rx="2" style="fill: url(#steelLeg)"></rect>
+<rect x="60" y="574" width="16" height="14" rx="2" style="fill: #2B2D30"></rect>
+<rect x="56" y="584" width="24" height="5" rx="2" style="fill: #3A3C40"></rect>
+<rect x="639" y="243" width="22" height="405" rx="2" style="fill: url(#steelLeg)"></rect>
+<rect x="642" y="648" width="16" height="14" rx="2" style="fill: #2B2D30"></rect>
+<rect x="638" y="658" width="24" height="5" rx="2" style="fill: #3A3C40"></rect>
+</g>
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="79,171 639,240 639,262 79,193" style="fill: url(#steelEdge)"></polygon>
+<polygon points="661,243 764,149 764,168 661,262" style="fill: #A9A9A4"></polygon>
+<polygon points="40,148 180,22 805,100 668,225" style="fill: #FBF8F3"></polygon>
+<polygon points="40,148 668,225 668,243 40,166" style="fill: url(#steelEdge)"></polygon>
+<polygon points="668,225 805,100 805,118 668,243" style="fill: #B4B4AF"></polygon>
+</g>
+<g data-show="G" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="40,148 180,22 805,100 668,225" style="fill: url(#granite)"></polygon>
+</g>
+</g>
+<g data-show="C" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="157,120 251,131 306,81 211,70" style="fill: #2B2D30; stroke: #A9A9A4; stroke-width: 3"></polygon>
+</g>
+</g>
+<g data-show="B" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="180,22 805,100 805,48 180,-30" style="fill: url(#steelEdge)"></polygon>
+<polygon points="180,-30 805,48 811,44 186,-34" style="fill: #E4E4E0"></polygon>
+</g>
+</g>
+<g data-show="SK" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="451,163 608,182 677,120 520,100" style="fill: #8C8C87"></polygon>
+<polygon points="520,100 677,120 671,146 526,127" style="fill: #BCBCB7"></polygon>
+<ellipse cx="572" cy="152" rx="10" ry="5" style="fill: #4A4B4D"></ellipse>
+<path d="M618 94 V40 Q618 30 608 32 L584 37" style="fill: none; stroke: #7D7D78; stroke-width: 7; stroke-linecap: round"></path>
+<path d="M616 92 V41 Q616 33 608 35 L585 40" style="fill: none; stroke: #E4E4E0; stroke-width: 2; stroke-linecap: round"></path>
+<ellipse cx="618" cy="95" rx="9" ry="4" style="fill: #A9A9A4"></ellipse>
+</g>
+</g>
+<g data-show="posts1" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<rect x="174" y="-140" width="12" height="162" rx="2" style="fill: url(#steelLeg)"></rect>
+<rect x="799" y="-62" width="12" height="162" rx="2" style="fill: url(#steelLeg)"></rect>
+</g>
+</g>
+<g data-show="posts2" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<rect x="174" y="-280" width="12" height="302" rx="2" style="fill: url(#steelLeg)"></rect>
+<rect x="799" y="-202" width="12" height="302" rx="2" style="fill: url(#steelLeg)"></rect>
+</g>
+</g>
+<g data-show="O1" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="180,-128 805,-50 743,6 115,-71" style="fill: #FBF8F3"></polygon>
+<polygon points="115,-71 743,6 743,14 115,-63" style="fill: url(#steelEdge)"></polygon>
+<polygon points="743,6 805,-50 805,-42 743,14" style="fill: #B4B4AF"></polygon>
+</g>
+</g>
+<g data-show="O2" style="display: none">
+<g style="stroke: #5E5F5C; stroke-width: 0.8; stroke-linejoin: round">
+<polygon points="180,-268 805,-190 743,-134 115,-211" style="fill: #FBF8F3"></polygon>
+<polygon points="115,-211 743,-134 743,-126 115,-203" style="fill: url(#steelEdge)"></polygon>
+<polygon points="743,-134 805,-190 805,-182 743,-126" style="fill: #B4B4AF"></polygon>
+</g>
+</g>
+</g>
+<g id="dimsLayer"><g transform="matrix(-1 0 0 1 851 0)">
+<defs>
+<marker id="dimArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" style="fill: var(--accent)"></path>
+</marker>
+</defs>
+<g style="stroke: var(--accent); stroke-width: 1.2; opacity: 0.55">
+<line x1="30" y1="148" x2="-52" y2="148"></line>
+<line x1="56" y1="590" x2="-52" y2="590"></line>
+<line x1="68" y1="600" x2="68" y2="652"></line>
+<line x1="650" y1="674" x2="650" y2="726"></line>
+<line x1="662" y1="670" x2="702" y2="714"></line>
+<line x1="784" y1="558" x2="824" y2="602"></line>
+</g>
+<g style="stroke: var(--accent); stroke-width: 2.4; fill: none">
+<line x1="-36" y1="150" x2="-36" y2="588" style="marker-start: url(#dimArrow); marker-end: url(#dimArrow)"></line>
+<line x1="70" y1="642" x2="648" y2="714" style="marker-start: url(#dimArrow); marker-end: url(#dimArrow)"></line>
+<line x1="682" y1="692" x2="804" y2="580" style="marker-start: url(#dimArrow); marker-end: url(#dimArrow)"></line>
+</g>
+</g>
+<g style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; text-anchor: middle; fill: var(--accent); paint-order: stroke; stroke: var(--bg); stroke-width: 6px; stroke-linejoin: round">
+<text x="912" y="369" transform="rotate(-90 912 369)">H  850 mm</text>
+<text x="495" y="704" transform="rotate(-7.1 495 704)">L  <tspan id="dimL"></tspan> mm</text>
+<text x="91" y="654" transform="rotate(42.6 91 654)">D  <tspan id="dimD"></tspan> mm</text>
+</g>
+</g>
+</svg>
+</div></figure>
+<div class="info">
+<div class="crumb">Work table</div>
+<h1 class="disp">Work table</h1>
+<div class="pricerow"><div class="price disp" id="price"></div><div class="crumb">EQ code <span id="code"></span></div></div>
+<div class="sizes">
+<div class="field"><span class="lab" id="depthLab">Depth</span><div class="pills" id="depths" role="group" aria-labelledby="depthLab"></div></div>
+<div class="field"><label class="lab" for="len">Length</label><select id="len" class="mono"></select></div>
+</div>
+<div class="field">
+<div class="listhead"><span class="lab">Add-ons</span><span class="crumb">Prices for <span id="sizeShort"></span></span></div>
+<div class="list" id="grid"></div>
+</div>
+<div class="tot" aria-live="polite"><span class="n" id="count"></span><span style="display:flex;flex-direction:column;align-items:flex-end"><span class="t disp">Total <span id="total"></span></span><span class="n" id="each"></span></span></div>
+<div class="ctas"><div class="pqty" role="group" aria-label="Quantity"><button id="qtyDec" aria-label="Decrease quantity">−</button><input id="qtyIn" type="number" min="1" value="1" inputmode="numeric" aria-label="Quantity"><button id="qtyInc" aria-label="Increase quantity">+</button></div><button class="btn pri" id="addQuote">Add to quote</button></div>
+<p class="lede">Brushed stainless steel frame with a solid work top and low tubular bracing along the sides and back. The open front leaves room to stand close, stow equipment and clean underneath, and adjustable feet level it on uneven floors.</p>
+<div class="specs">
+<div><span class="lab">Size (L × D × H)</span><span class="mono" id="size"></span></div>
+<div><span class="lab">Frame</span><span>Stainless steel [GRADE], braced sides &amp; back</span></div>
+<div><span class="lab">Top</span><span>[TOP MATERIAL]</span></div>
+<div><span class="lab">Feet</span><span>Adjustable</span></div>
+</div>
+</div>
+</section>
+
+<section class="catview" id="viewCat" hidden>
+<div class="crumb" id="cCrumb"></div>
+<h1 class="disp" id="cHead"></h1>
+<p class="lede" id="cSub"></p>
+<div class="pgrid" id="pgrid"></div>
+</section>
+
+<section class="hero" id="viewProd" hidden>
+<figure class="gal"><div class="gmain" id="gBox"><div class="gstage" id="gStage"><img id="gMain" alt=""><svg class="gdims" id="gDims" aria-hidden="true"></svg></div></div><div class="gthumbs" id="gThumbs"></div></figure>
+<div class="info">
+<div class="crumb" id="pCrumb"></div>
+<h1 class="disp" id="pTitle"></h1>
+<div class="pricerow"><div class="price disp" id="pPrice"></div><div class="crumb">EQ code <span id="pCode"></span></div></div>
+<div class="field">
+<div class="listhead"><span class="lab" id="szLab">Size &amp; model</span><span class="crumb" id="pCount"></span></div>
+<div class="vlist" id="pSizes" role="radiogroup" aria-labelledby="szLab"></div>
+</div>
+<div class="field" id="pAddWrap">
+<div class="listhead"><span class="lab">Add-ons</span><span class="crumb">Prices for <span id="pFor"></span></span></div>
+<div class="list" id="pAddons"></div>
+</div>
+<div class="tot" aria-live="polite"><span class="n" id="pCountSel"></span><span style="display:flex;flex-direction:column;align-items:flex-end"><span class="t disp">Total <span id="pTotal"></span></span><span class="n" id="pEach"></span></span></div>
+<div class="ctas"><div class="pqty" role="group" aria-label="Quantity"><button id="pqDec" aria-label="Decrease quantity">−</button><input id="pqIn" type="number" min="1" value="1" inputmode="numeric" aria-label="Quantity"><button id="pqInc" aria-label="Increase quantity">+</button></div><button class="btn pri" id="pAdd">Add to quote</button></div>
+<div class="pspec"><div class="lab">Specification</div><ul id="pSpecs"></ul></div>
+<div class="pspec" id="pNotesWrap"><div class="lab">Notes</div><ul id="pNotes"></ul></div>
+<p class="crumb" id="pLegend"></p>
+</div>
+</section>
+
+</main>
+
+<aside class="qpanel" id="quote" aria-labelledby="qTitle">
+<div class="qhead"><h2 class="disp" id="qTitle">Quote</h2><div class="qnum"><span id="qnum"></span> &nbsp; <span id="qdate"></span></div>
+<button class="fsbtn" id="fsBtn" aria-pressed="false" title="Expand quote to full screen"><svg class="i-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg><svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"></path></svg><span class="fslabel">Full screen</span></button>
+<button class="qclose" id="qClose" aria-label="Collapse quote" title="Collapse"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button></div>
+<div class="qbody">
+<div class="qmeta">
+<div class="metatop"><p class="metanote" id="needName">Enter a project name, a customer name, or both.</p><button class="linkbtn small" id="clearDetails" type="button">Clear details</button></div>
+<input type="text" id="custRef" placeholder="Project name" autocomplete="off" aria-label="Project name" aria-describedby="needName">
+<input type="text" id="custName" placeholder="Customer name" autocomplete="name" aria-label="Customer name" aria-describedby="needName">
+<input type="email" class="half" id="custEmail" placeholder="Email (optional)" autocomplete="email" inputmode="email" aria-label="Email">
+<input type="tel" class="half" id="custPhone" placeholder="Phone (optional)" autocomplete="tel" inputmode="tel" aria-label="Phone">
+<p class="metahint" id="metaHint" hidden></p>
+</div>
+<div class="loadrow"><button class="linkbtn small" id="loadQuoteBtn" type="button">Open a saved quote (PDF)</button><input type="file" id="quoteFile" accept="application/pdf,.pdf" hidden></div>
+<p class="loadreport" id="loadReport" hidden></p>
+<div id="items" class="qitems"></div>
+<details class="custom" id="customBox"><summary>Add a custom item</summary>
+<div class="cform">
+<label class="qfield cwide">Item name<input type="text" id="cname" autocomplete="off"></label>
+<label class="qfield">Item code (optional)<input type="text" id="ccode" autocomplete="off"></label>
+<label class="qfield">Price (₹)<input type="number" id="cprice" min="0" step="0.01" inputmode="decimal"></label>
+<label class="qfield">Qty<input type="number" id="cqty" min="1" value="1" inputmode="numeric"></label>
+<button class="btn pri" id="addCustom" type="button">Add to quote</button>
+</div></details>
+</div>
+<div class="qfoot">
+<div class="row"><span>Subtotal</span><span id="qsub">₹0.00</span></div>
+<div class="row"><label><input type="checkbox" id="gstOn" checked> GST 18%</label><span id="qgst">₹0.00</span></div>
+<div class="row grand"><span>Total</span><span id="qgrand">₹0.00</span></div>
+<div class="qacts">
+<button class="btn sec" id="qClear">Clear quote</button>
+<button class="btn pri" id="qPrint">Save PDF</button>
+<button class="btn sec" id="qShare"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg><span>Share</span></button>
+<button class="btn sec" id="qWa"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"></path></svg><span>WhatsApp</span></button>
+</div>
+<p class="sharenote" id="shareNote" hidden></p>
+</div>
+</aside>
+<aside class="cpanel" id="cats" aria-labelledby="cTitle">
+<div class="chead"><div class="cfull"><div class="cbrand">Catalogue</div><h2 class="disp" id="cTitle">Categories</h2></div>
+<div class="cini" aria-hidden="true">KW</div>
+<button class="qclose cpin" id="cPin" aria-pressed="false" aria-label="Pin categories open" title="Pin open"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l-1 5 3 3v2H7v-2l3-3-1-5z"></path><path d="M12 14v6"></path></svg></button>
+<button class="qclose" id="cClose" aria-label="Close categories" title="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></button></div>
+<nav class="clist" id="catList" aria-label="Catalogue categories"></nav>
+<div class="cver">Page version: v2 · 25 Sep 2026</div>
+</aside>
+<button class="ctab" id="cTab" aria-label="Open categories" aria-controls="cats"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span class="vt">Categories</span></button>
+<button class="qtab" id="qTab" aria-label="Open quote" aria-controls="quote"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg><span class="vt">Quote</span><span class="badge" id="qBadge">0</span></button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="totop" id="toTop" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
+<button class="cartfab empty" id="cartFab" aria-label="Go to quote"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11h11.2L21 7H6.2"></path><circle cx="9.5" cy="19.5" r="1.3"></circle><circle cx="17" cy="19.5" r="1.3"></circle></svg><span class="ccount" id="cartCount" hidden>0</span><span class="ctotal" id="cartTotal">Quote</span></button>
+<script>
+const TABLES = [{"l":400,"d":600,"code":"WT46","p":10000,"a":[1200,2400,500,4000,2000,4000,8000,4200,4000,1500]},{"l":450,"d":600,"code":"WT4H6","p":10500,"a":[1260,2520,525,4200,2100,4200,8000,4410,4200,1500]},{"l":600,"d":600,"code":"WT66","p":12075,"a":[1500,2900,600,4830,2415,4830,8000,5070,4830,1500]},{"l":700,"d":600,"code":"WT76","p":13280,"a":[1650,3190,660,5315,2660,5315,8000,5580,5315,1500]},{"l":750,"d":600,"code":"WT7H6","p":13950,"a":[1735,3350,695,5580,2795,5580,8000,5860,5580,1500]},{"l":900,"d":600,"code":"WT96","p":16050,"a":[1995,3850,800,6420,3215,6420,8000,6740,6420,1500]},{"l":1000,"d":600,"code":"WT106","p":17655,"a":[2995,4235,880,7060,3540,7060,8000,7415,7060,1500]},{"l":1150,"d":600,"code":"WT11H6","p":20300,"a":[3445,4870,1015,8120,4070,8120,8000,8530,8120,1500]},{"l":1200,"d":600,"code":"WT126","p":21315,"a":[3620,5115,1100,8530,4275,8530,8000,8960,8530,1500]},{"l":1250,"d":600,"code":"WT12H6","p":22420,"a":[3800,5370,1155,8960,4490,8960,8000,9410,8960,1500]},{"l":1350,"d":600,"code":"WT13H6","p":24665,"a":[4180,5910,1270,9860,4940,9860,8000,10350,9860,1500]},{"l":1500,"d":600,"code":"WT156","p":28365,"a":[4810,6800,1460,11340,5680,11340,8000,11900,11340,1500]},{"l":1800,"d":600,"code":"WT186","p":36875,"a":[6255,8840,1900,14745,7385,14750,8000,15470,14750,1500]},{"l":2100,"d":600,"code":"WT216","p":47940,"a":[8135,11495,2470,19170,9600,19175,8000,20100,19175,1500]},{"l":400,"d":700,"code":"WT47","p":11000,"a":[1320,2640,500,4400,2000,4000,8000,4620,4400,1500]},{"l":450,"d":700,"code":"WT4H7","p":11550,"a":[1390,2775,525,4620,2100,4200,8000,4850,4620,1500]},{"l":600,"d":700,"code":"WT67","p":13290,"a":[1600,3190,600,5315,2415,4830,8000,5580,5315,1500]},{"l":700,"d":700,"code":"WT77","p":14620,"a":[1760,3510,660,5850,2660,5315,8000,6140,5850,1500]},{"l":750,"d":700,"code":"WT7H7","p":15350,"a":[1850,3310,695,6150,2795,5580,8000,6450,6150,1500]},{"l":900,"d":700,"code":"WT97","p":17650,"a":[2130,3810,800,7075,3215,6420,8000,7420,7075,1500]},{"l":1000,"d":700,"code":"WT107","p":19415,"a":[2350,4190,880,7785,3540,7060,8000,8160,7785,1500]},{"l":1150,"d":700,"code":"WT11H7","p":22330,"a":[2700,4820,1015,8955,4070,8120,8000,9385,8955,1500]},{"l":1200,"d":700,"code":"WT127","p":23450,"a":[2835,5060,1100,9405,4275,8530,8000,9855,9405,1500]},{"l":1250,"d":700,"code":"WT12H7","p":24625,"a":[2980,5315,1155,9875,4490,8960,8000,10350,9875,1500]},{"l":1350,"d":700,"code":"WT13H7","p":27090,"a":[3280,5850,1270,10865,4940,9860,8000,11385,10865,1500]},{"l":1500,"d":700,"code":"WT157","p":31155,"a":[3775,6730,1460,12500,5680,11340,8000,13090,12500,1500]},{"l":1800,"d":700,"code":"WT187","p":40500,"a":[4910,8750,1900,16250,7385,14750,8000,17020,16250,1500]},{"l":2100,"d":700,"code":"WT217","p":52650,"a":[6385,11375,2470,21125,9600,19175,8000,22125,21125,1500]},{"l":400,"d":750,"code":"WT47H","p":11550,"a":[1390,2775,500,4620,2000,4000,8000,4850,4620,1500]},{"l":450,"d":750,"code":"WT4H7H","p":12130,"a":[1460,2915,525,4850,2100,4200,8000,5095,4850,1500]},{"l":600,"d":750,"code":"WT67H","p":13950,"a":[1680,3355,600,5580,2415,4830,8000,5860,5580,1500]},{"l":700,"d":750,"code":"WT77H","p":15345,"a":[1850,3690,660,6140,2660,5315,8000,6450,6140,1500]},{"l":750,"d":750,"code":"WT7H7H","p":16115,"a":[1945,3875,695,6450,2795,5580,8000,6775,6450,1500]},{"l":900,"d":750,"code":"WT97H","p":18530,"a":[2240,4455,800,7420,3215,6420,8000,7790,7420,1500]},{"l":1000,"d":750,"code":"WT107H","p":20385,"a":[2465,4900,880,8165,3540,7060,8000,8570,8165,1500]},{"l":1150,"d":750,"code":"WT11H7H","p":23445,"a":[2835,5635,1015,9390,4070,8120,8000,9860,9390,1500]},{"l":1200,"d":750,"code":"WT127H","p":24620,"a":[2980,5920,1100,9860,4275,8530,8000,10355,9860,1500]},{"l":1250,"d":750,"code":"WT12H7H","p":25850,"a":[3130,6215,1155,10355,4490,8960,8000,10875,10355,1500]},{"l":1350,"d":750,"code":"WT13H7H","p":28435,"a":[3445,6840,1270,11390,4940,9860,8000,11965,11390,1500]},{"l":1500,"d":750,"code":"WT157H","p":32700,"a":[3965,7865,1460,13100,5680,11340,8000,13760,13100,1500]},{"l":1800,"d":750,"code":"WT187H","p":42510,"a":[5155,10225,1900,17030,7385,14750,8000,17890,17030,1500]},{"l":2100,"d":750,"code":"WT217H","p":55265,"a":[9305,15295,2470,22140,9600,19175,8000,23260,22140,1500]},{"l":400,"d":900,"code":"WT49","p":12995,"a":[1565,3125,500,5200,2000,4000,8000,5460,5200,1500]},{"l":450,"d":900,"code":"WT4H9","p":13645,"a":[1645,3280,525,5460,2100,4200,8000,5735,5460,1500]},{"l":600,"d":900,"code":"WT69","p":15695,"a":[1895,3775,600,6280,2415,4830,8000,6595,6280,1500]},{"l":700,"d":900,"code":"WT79","p":17265,"a":[2085,4155,660,6910,2660,5315,8000,7255,6910,1500]},{"l":750,"d":900,"code":"WT7H9","p":18130,"a":[2190,4365,695,7255,2795,5580,8000,7620,7255,1500]},{"l":900,"d":900,"code":"WT99","p":20850,"a":[2520,5020,800,8345,3215,6420,8000,8765,8345,1500]},{"l":1000,"d":900,"code":"WT109","p":22935,"a":[2775,5525,880,9180,3540,7060,8000,9645,9180,1500]},{"l":1150,"d":900,"code":"WT11H9","p":26375,"a":[3190,6355,1015,10560,4070,8120,8000,11095,10560,1500]},{"l":1200,"d":900,"code":"WT129","p":27695,"a":[3350,6675,1100,11090,4275,8530,8000,11650,11090,1500]},{"l":1250,"d":900,"code":"WT12H9","p":29080,"a":[3520,7010,1155,11645,4490,8960,8000,12235,11645,1500]},{"l":1350,"d":900,"code":"WT13H9","p":31990,"a":[3875,7710,1270,12810,4940,9860,8000,13460,12810,1500]},{"l":1500,"d":900,"code":"WT159","p":36790,"a":[4460,8870,1460,14735,5680,11340,8000,15480,14735,1500]},{"l":1800,"d":900,"code":"WT189","p":47830,"a":[5800,11530,1900,19155,7385,14750,8000,20125,19155,1500]},{"l":2100,"d":900,"code":"WT219","p":62180,"a":[7540,14990,2470,24905,9600,19175,8000,26165,21905,1500]}];
+const ADDONS = [{"k": "U1", "name": "1st Under Shelf", "code": "U1", "desc": "The bottom shelf, fitted low between the legs for storage.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 12h36M10 12v30M38 12v30M10 36h28\"></path></svg>"}, {"k": "U2", "name": "2nd Under Shelf", "code": "U2", "desc": "A middle shelf, above the bottom shelf, for extra storage.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 12h36M10 12v30M38 12v30M10 24h28\"></path><path d=\"M10 36h28\" style=\"stroke-dasharray: 2 3; opacity: 0.6\"></path></svg>"}, {"k": "B", "name": "Back Splash", "code": "B", "desc": "A raised edge along the back to stop spills going over.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 22h36M10 22v20M38 22v20M8 22V10h32v12\"></path></svg>"}, {"k": "G", "name": "Granite Top", "code": "G", "desc": "A granite work surface on top of the table.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"6\" y=\"12\" width=\"36\" height=\"7\" rx=\"1\"></rect><path d=\"M10 19v23M38 19v23\"></path><path d=\"M14 15.5h.01M21 14.5h.01M28 16h.01M34 14.5h.01\" style=\"stroke-width: 3\"></path></svg>"}, {"k": "O1", "name": "1 Overhead Shelf", "code": "O1", "desc": "One shelf mounted above the work top.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 30h36M10 30v14M38 30v14M13 30V6M35 30V6M10 13h28\"></path></svg>"}, {"k": "O2", "name": "2 Overhead Shelves", "code": "O2", "desc": "Two shelves mounted above the work top.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 32h36M10 32v12M38 32v12M13 32V4M35 32V4M10 10h28M10 20h28\"></path></svg>"}, {"k": "SK", "name": "Sink", "code": "SK*", "desc": "A sink bowl set into the work top.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 18h36M10 18v24M38 18v24M16 18v6a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-6M24 18V8h6v3\"></path></svg>"}, {"k": "3S", "name": "Side Cover", "code": "3S", "desc": "Cover panels enclosing the sides of the base.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 12h36\"></path><rect x=\"8\" y=\"12\" width=\"6\" height=\"30\"></rect><rect x=\"34\" y=\"12\" width=\"6\" height=\"30\"></rect><path d=\"M14 20h20\" style=\"stroke-dasharray: 2 3\"></path></svg>"}, {"k": "D", "name": "Door", "code": "D", "desc": "A door on the front of the base.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 10h36\"></path><rect x=\"9\" y=\"10\" width=\"30\" height=\"32\"></rect><path d=\"M33 22v8\"></path></svg>"}, {"k": "C", "name": "Chute", "code": "C**", "desc": "A waste chute through the work top.", "icon": "<svg width=\"44\" height=\"44\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 14h36M10 14v28M38 14v28M18 14l4 12h4l4-12M22 26v8h4v-8\"></path></svg>"}];
+const NEEDS = { U2: 'U1', O2: 'O1' };
+const NEED_TEXT = { U2: 'Add the bottom shelf (U1) first', O2: 'Add 1 Overhead Shelf first' };
+const inr = (n) => '\u20B9' + n.toLocaleString('en-IN');
+const state = { depth: 600, length: 750, picked: {}, qty: 1 };
+const $ = (id) => document.getElementById(id);
+const CHECK = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"></path></svg>';
+
+[600, 700, 750, 900].forEach((d) => {
+  const b = document.createElement('button');
+  b.className = 'pill mono'; b.textContent = d + ' mm'; b.dataset.d = d;
+  b.addEventListener('click', () => { state.depth = d; render(); });
+  $('depths').appendChild(b);
+});
+$('len').addEventListener('change', (e) => { state.length = Number(e.target.value); render(); });
+
+ADDONS.forEach((a) => {
+  const b = document.createElement('button');
+  b.className = 'card'; b.dataset.k = a.k;
+  b.innerHTML = '<div class="box">' + CHECK + '</div>' + a.icon.replace('width="44" height="44"', 'class="ic" width="30" height="30"') +
+    '<span class="txt"><span class="nm"><b>' + a.name + '</b><span class="mono">' + a.code + '</span></span>' +
+    '<span class="ds">' + a.desc + '</span>' +
+    (NEEDS[a.k] ? '<span class="need">' + NEED_TEXT[a.k] + '</span>' : '') + '</span>' +
+    '<span class="pr mono"></span>';
+  b.addEventListener('click', () => {
+    if (b.getAttribute('aria-disabled') === 'true') return;
+    const on = !!state.picked[a.k];
+    state.picked[a.k] = !on;
+    if (on) Object.keys(NEEDS).forEach((d) => { if (NEEDS[d] === a.k) state.picked[d] = false; });
+    render();
+  });
+  $('grid').appendChild(b);
+});
+
+function render() {
+  const lengths = TABLES.filter((t) => t.d === state.depth).map((t) => t.l);
+  if (!lengths.includes(state.length)) state.length = lengths[0];
+  const row = TABLES.find((t) => t.d === state.depth && t.l === state.length);
+  $('code').textContent = row.code;
+  $('price').textContent = inr(row.p);
+  $('size').textContent = row.l + ' \u00D7 ' + row.d + ' \u00D7 850 mm';
+  $('sizeShort').textContent = row.l + ' \u00D7 ' + row.d + ' mm';
+  $('dimL').textContent = row.l; $('dimD').textContent = row.d;
+  document.querySelectorAll('.pill').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.d) === state.depth)));
+  const sel = $('len');
+  sel.innerHTML = lengths.map((l) => '<option value="' + l + '">' + l + ' mm</option>').join('');
+  sel.value = String(state.length);
+  let total = row.p, count = 0;
+  ADDONS.forEach((a, i) => {
+    const b = document.querySelector('.card[data-k="' + a.k + '"]');
+    const locked = !!NEEDS[a.k] && !state.picked[NEEDS[a.k]];
+    if (locked) state.picked[a.k] = false;
+    const on = !!state.picked[a.k];
+    if (on) { total += row.a[i]; count++; }
+    b.setAttribute('aria-pressed', String(on));
+    b.setAttribute('aria-disabled', String(locked));
+    b.querySelector('.pr').textContent = '+ ' + inr(row.a[i]);
+  });
+  const show = {};
+  ADDONS.forEach((a) => { show[a.k] = !!state.picked[a.k]; });
+  show.posts1 = show.O1 && !show.O2;
+  show.posts2 = show.O2;
+  document.querySelectorAll('[data-show]').forEach((g) => { g.style.display = show[g.dataset.show] ? 'inline' : 'none'; });
+  const vy = show.O2 ? -300 : show.O1 ? -160 : show.B ? -50 : -20;
+  const vh = 754 - vy;
+  $('artSvg').setAttribute('viewBox', '15 ' + vy + ' 910 ' + vh);
+  document.querySelector('.art').style.aspectRatio = '910 / ' + vh;
+  const extras = ADDONS.filter((a) => show[a.k]).map((a) => a.name);
+  $('artSvg').setAttribute('aria-label', 'Stainless steel work table with a braced base' + (extras.length ? ', shown with: ' + extras.join(', ') : ''));
+  $('count').textContent = count === 0 ? 'No add-ons selected' : count === 1 ? '1 add-on selected' : count + ' add-ons selected';
+  $('total').textContent = inr(total * state.qty);
+  $('each').textContent = state.qty > 1 ? state.qty + ' \u00D7 ' + inr(total) + ' each' : '';
+  $('qtyIn').value = state.qty;
+  $('qtyDec').disabled = state.qty <= 1;
+}
+render();
+
+/* ---------- brand buttons + scroll tray ---------- */
+const LOGOS = {kitchenwhiz:"",barwhiz:"",usp:"",heatko:""};
+const BRANDS = [
+  { key: "kitchenwhiz", label: "", bg: "#FFFFFF" }
+];
+const CURRENT_BRAND = "kitchenwhiz";
+function brandButtons(host) {
+  BRANDS.forEach((b) => {
+    const on = b.key === CURRENT_BRAND;
+    const el = document.createElement("button");
+    el.className = "brand" + (on ? " active" : "");
+    el.dataset.key = b.key;
+    el.style.background = b.bg;
+    el.setAttribute("aria-label", b.label + (on ? " (current brand)" : " (not available)"));
+    if (on) {
+      el.setAttribute("aria-pressed", "true");
+      el.addEventListener("click", (e) => { e.stopPropagation(); brandToTray(); });
+    } else {
+      el.disabled = true;
+    }
+    el.innerHTML = '<img src="data:image/webp;base64,' + LOGOS[b.key] + '" alt=""><span class="blabel">' + b.label + '</span>';
+    host.appendChild(el);
+  });
+}
+brandButtons($("brands"));
+brandButtons($("trayBrands"));
+const tray = $("tray");
+const tab = $("trayTab");
+let past = false;
+let dismissed = false;
+/* Once the brands have moved into the top tray, the big brand row stays folded away until the page is reloaded */
+let tucked = false;
+function tuckBrands() {
+  if (tucked) return;
+  tucked = true;
+  const bar = document.querySelector('.brandbar');
+  const r = bar.getBoundingClientRect();
+  const above = r.bottom <= 0;
+  bar.hidden = true;
+  if (above) window.scrollBy(0, -r.height);
+  past = true;
+  syncTray();
+}
+function syncTray() {
+  const on = past && !dismissed;
+  const tabOn = past && dismissed;
+  tray.classList.toggle("show", on);
+  tray.setAttribute("aria-hidden", String(!on));
+  tray.inert = !on;
+  tab.classList.toggle("show", tabOn);
+  tab.inert = !tabOn;
+  document.body.classList.toggle("tray-on", on);
+}
+$("trayHide").addEventListener("click", () => { dismissed = true; syncTray(); tab.focus(); });
+tab.addEventListener("click", () => { dismissed = false; syncTray(); $("trayHide").focus(); });
+syncTray();
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver((entries) => {
+    const e = entries[0];
+    past = tucked || (!e.isIntersecting && e.boundingClientRect.top < 0);
+    if (past && !tucked) tuckBrands();
+    syncTray();
+  }).observe($("brands"));
+} else {
+  const check = () => { past = tucked || $("brands").getBoundingClientRect().bottom < 0; if (past && !tucked) tuckBrands(); syncTray(); };
+  window.addEventListener("scroll", check, { passive: true });
+  check();
+}
+
+/* ---------- quote (same as the Quote Builder) ---------- */
+const money = (n) => '\u20B9' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let quote = store.get('wt_quote', []);
+let quoteNum = store.get('wt_qnum', 'Q-' + Math.floor(1000 + Math.random() * 9000));
+let gstOn = store.get('wt_gst', true);
+const baseOf = (q) => { const r = (q.addons || []).find((a) => a.replace); return r ? r.price : q.price; };
+const unitOf = (q) => baseOf(q) + (q.addons || []).filter((a) => !a.replace).reduce((t, a) => t + a.price, 0);
+const finalCode = (q) => [q.code].concat(q.addons.map((a) => a.code)).filter(Boolean).join(' + ');
+const isCustom = (q) => q.cat === 'Custom';
+const isWT = (q) => !isCustom(q) && (!q.pid || q.pid === 'worktable');
+const brandLabel = (q) => '';
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2200); }
+function setQuoteOpen(on) {
+  const p = $('quote');
+  if (on && !p.classList.contains('open')) { p.classList.add('flashq'); setTimeout(() => p.classList.remove('flashq'), 900); }
+  p.classList.toggle('open', on);
+  p.inert = !on;
+  document.body.classList.toggle('quote-open', on);
+  $('qTab').inert = on;
+  store.set('wt_qopen', on);
+  if (typeof syncNav === 'function') setTimeout(syncNav, 0);
+  if (typeof updateCartFab === 'function') updateCartFab();
+}
+let editIdx = null;
+let editSel = new Set();
+let editName = '', editPrice = 0, editCode = '';
+const rowOf = (q) => !isWT(q) ? null : TABLES.find((t) => t.code === q.code) || TABLES.find((t) => q.size.indexOf(t.l + 'x' + t.d + 'x') === 0);
+function editAddons(q) {
+  if (!isWT(q)) {
+    const pv = findVariant(q.code);
+    if (!pv) return [];
+    return pv.p.addons.filter((a) => pv.v.ad[a.code] != null).map((a) => ({ k: a.code, code: a.code, name: a.name, price: pv.v.ad[a.code], replace: a.replace }));
+  }
+  const row = rowOf(q);
+  return ADDONS.map((a, i) => ({ k: a.k, code: a.code, name: a.name, price: row ? row.a[i] : 0 }));
+}
+function selPrice(q) {
+  const opts = editAddons(q).filter((a) => editSel.has(a.k));
+  const r = opts.find((a) => a.replace);
+  return (r ? r.price : q.price) + opts.filter((a) => !a.replace).reduce((t, a) => t + a.price, 0);
+}
+function startEdit(i) {
+  editIdx = i;
+  editName = quote[i].name; editPrice = quote[i].price; editCode = quote[i].code || '';
+  const codes = quote[i].addons.map((a) => a.code);
+  editSel = new Set(editAddons(quote[i]).filter((a) => codes.includes(a.code)).map((a) => a.k));
+  renderQuote();
+  const ed = $('items').querySelector('.qedit'); if (ed) ed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function saveEdit() {
+  const q = quote[editIdx];
+  if (isCustom(q)) {
+    const nm = editName.trim(); if (!nm) { toast('Enter an item name'); return; }
+    if (isNaN(editPrice) || editPrice < 0) { toast('Enter a valid price'); return; }
+    q.name = nm; q.price = editPrice; q.code = editCode.trim();
+    editIdx = null; renderQuote(); toast('Line updated'); return;
+  }
+  q.addons = editAddons(q).filter((a) => editSel.has(a.k)).map((a) => ({ code: a.code, label: a.name + (a.name === a.code ? '' : ' (' + a.code + ')'), price: a.price, replace: !!a.replace }));
+  editIdx = null;
+  renderQuote();
+  toast('Line updated');
+}
+function moveLine(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= quote.length) return;
+  const t = quote[i]; quote[i] = quote[j]; quote[j] = t;
+  if (editIdx === i) editIdx = j; else if (editIdx === j) editIdx = i;
+  renderQuote();
+  const el = $('items').children[j]; if (el) { el.classList.add('moved'); el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); setTimeout(() => el.classList.remove('moved'), 600); }
+}
+function renderQuote() {
+  const wrap = $('items');
+  if (editIdx !== null && !quote[editIdx]) editIdx = null;
+  wrap.innerHTML = quote.length ? '' : '<div class="qempty">No items yet. Choose a size and add-ons, then press Add to quote.</div>';
+  quote.forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'qitem';
+    const editing = editIdx === i;
+    let editor = '';
+    if (editing && isCustom(q)) {
+      editor = '<div class="qedit"><div class="qedit-h">Edit custom item</div>' +
+        '<label class="qfield">Item name<input type="text" class="e-name" value="' + esc(editName) + '"></label>' +
+        '<label class="qfield">Item code (optional)<input type="text" class="e-code" value="' + esc(editCode) + '" autocomplete="off"></label>' +
+        '<label class="qfield">Price (\u20B9)<input type="number" class="e-price" min="0" step="0.01" value="' + editPrice + '"></label>' +
+        '<div class="irow iunit"><span>Price per unit</span><span class="amt e-each">' + money(editPrice || 0) + '</span></div>' +
+        '<div class="qedit-act"><button class="btn sec e-cancel">Cancel</button><button class="btn pri e-save">Save changes</button></div></div>';
+    } else if (editing) {
+      editor = '<div class="qedit"><div class="qedit-h">Edit options</div><div class="qedit-list">' +
+        editAddons(q).map((a) => {
+          const need = NEEDS[a.k];
+          const locked = !!need && !editSel.has(need);
+          return '<label class="optitem' + (locked ? ' locked' : '') + '"><input type="checkbox" class="e-ad" data-k="' + a.k + '"' + (editSel.has(a.k) && !locked ? ' checked' : '') + (locked ? ' disabled' : '') + '>' +
+            '<span><span class="oname">' + esc(a.name) + '</span> <span class="ocode">' + esc(a.code) + '</span>' + (locked ? '<span class="oneed">' + NEED_TEXT[a.k] + '</span>' : '') + '</span>' +
+            '<span class="oprice">' + (a.replace ? '= ' : '+ ') + money(a.price) + '</span></label>';
+        }).join('') + '</div>' +
+        '<div class="irow iunit"><span>Price per unit</span><span class="amt e-each">' + money(selPrice(q)) + '</span></div>' +
+        '<div class="qedit-act"><button class="btn sec e-cancel">Cancel</button><button class="btn pri e-save">Save changes</button></div></div>';
+    }
+    d.innerHTML =
+      '<div class="itop"><div><div class="ibrand">' + esc(brandLabel(q)) + '</div>' + (q.code ? '<div class="icode">Item code: ' + esc(q.code) + '</div>' : '') + '</div>' +
+      '<div class="imove"><button class="mv up" aria-label="Move line up"' + (i === 0 ? ' disabled' : '') + '>\u25B2</button>' +
+      '<button class="mv down" aria-label="Move line down"' + (i === quote.length - 1 ? ' disabled' : '') + '>\u25BC</button>' +
+      (editing ? '' : '<button class="mv edit" aria-label="Edit add-ons for line ' + (i + 1) + '">Edit</button>') + '</div></div>' +
+      '<div class="irow"><span class="iname">' + esc(q.name) + '</span><span class="amt">' + (baseOf(q) !== q.price ? '<s>' + money(q.price) + '</s>' : money(q.price)) + '</span></div>' +
+      '<div class="isub">' + (isCustom(q) ? 'Custom item' : esc(catLabel(q.cat)) + ', ' + esc(q.size) + ' mm') + '</div>' +
+      (q.addons.length ? '<ul class="iadds">' + q.addons.map((a) => '<li class="irow"><span>' + (a.replace ? esc(a.label) + ' (replaces base price)' : '+ ' + esc(a.label)) + '</span><span class="amt">' + money(a.price) + '</span></li>').join('') + '</ul>' +
+        '<div class="irow iunit"><span>Price per unit</span><span class="amt">' + money(unitOf(q)) + '</span></div>' : '') +
+      editor +
+      (q.code ? '<div class="ifinal">Final item code: <b>' + esc(finalCode(q)) + '</b></div>' : '') +
+      '<div class="ifoot"><div class="ictrl"><button class="dec" aria-label="Decrease quantity">\u2212</button>' +
+      '<input class="qty" type="number" min="1" value="' + q.qty + '" aria-label="Quantity">' +
+      '<button class="inc" aria-label="Increase quantity">+</button><button class="remove">Remove</button></div>' +
+      '<div class="iline"><span class="ilabel">' + q.qty + ' \u00D7 ' + money(unitOf(q)) + '</span><b>' + money(unitOf(q) * q.qty) + '</b></div></div>';
+    d.querySelector('.dec').onclick = () => { if (q.qty > 1) { q.qty--; renderQuote(); } };
+    d.querySelector('.inc').onclick = () => { q.qty++; renderQuote(); };
+    d.querySelector('.qty').onchange = (e) => { const v = parseInt(e.target.value, 10); q.qty = v > 0 ? v : 1; renderQuote(); };
+    d.querySelector('.remove').onclick = () => { if (editIdx === i) editIdx = null; else if (editIdx !== null && editIdx > i) editIdx--; quote.splice(i, 1); renderQuote(); };
+    d.querySelector('.up').onclick = () => moveLine(i, -1);
+    d.querySelector('.down').onclick = () => moveLine(i, 1);
+    if (d.querySelector('.edit')) d.querySelector('.edit').onclick = () => startEdit(i);
+    if (editing) {
+      d.querySelectorAll('.e-ad').forEach((cb) => cb.onchange = () => {
+        const k = cb.dataset.k;
+        if (cb.checked) editSel.add(k); else { editSel.delete(k); Object.keys(NEEDS).forEach((dk) => { if (NEEDS[dk] === k) editSel.delete(dk); }); }
+        const keepScroll = $('quote').querySelector('.qbody').scrollTop;
+        renderQuote();
+        $('quote').querySelector('.qbody').scrollTop = keepScroll;
+        const again = $('items').querySelector('.e-ad[data-k="' + k + '"]'); if (again) again.focus();
+      });
+      if (d.querySelector('.e-name')) {
+        const each = d.querySelector('.e-each');
+        d.querySelector('.e-name').oninput = (e) => { editName = e.target.value; };
+        d.querySelector('.e-code').oninput = (e) => { editCode = e.target.value; };
+        d.querySelector('.e-price').oninput = (e) => { editPrice = parseFloat(e.target.value); each.textContent = money(editPrice || 0); };
+      }
+      d.querySelector('.e-cancel').onclick = () => { editIdx = null; renderQuote(); };
+      d.querySelector('.e-save').onclick = saveEdit;
+    }
+    wrap.appendChild(d);
+  });
+  const sub = quote.reduce((t, q) => t + unitOf(q) * q.qty, 0);
+  const gst = gstOn ? sub * 0.18 : 0;
+  $('qsub').textContent = money(sub);
+  $('qgst').textContent = money(gst);
+  $('qgrand').textContent = money(sub + gst);
+  $('gstOn').checked = gstOn;
+  $('qnum').textContent = 'Quote ' + quoteNum;
+  $('qdate').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  $('qBadge').textContent = quote.reduce((t, q) => t + q.qty, 0);
+  store.set('wt_quote', quote); store.set('wt_qnum', quoteNum); store.set('wt_gst', gstOn);
+  setTimeout(() => { if (typeof warmPdf === 'function') warmPdf(); if (typeof updateCartFab === 'function') updateCartFab(); }, 0);
+}
+
+$('qtyDec').addEventListener('click', () => { if (state.qty > 1) { state.qty--; render(); } });
+$('qtyInc').addEventListener('click', () => { state.qty++; render(); });
+$('qtyIn').addEventListener('change', (e) => { const v = parseInt(e.target.value, 10); state.qty = v > 0 ? Math.min(v, 999) : 1; render(); });
+$('addQuote').addEventListener('click', () => {
+  const row = TABLES.find((t) => t.d === state.depth && t.l === state.length);
+  const addons = [];
+  ADDONS.forEach((a, i) => { if (state.picked[a.k]) addons.push({ code: a.code, label: a.name + ' (' + a.code + ')', price: row.a[i] }); });
+  const n = state.qty;
+  const item = { pid: 'worktable', cat: 'Work Table', brand: 'kitchenwhiz', name: 'Work table', size: row.l + 'x' + row.d + 'x850', code: row.code, price: row.p, addons: addons, qty: n };
+  const same = quote.find((q) => isWT(q) && finalCode(q) === finalCode(item));
+  if (same) same.qty += n; else quote.push(item);
+  state.qty = 1; render();
+  renderQuote();
+  setQuoteOpen(true);
+  toast((n > 1 ? n + ' tables ' : '') + (same ? 'added \u2013 quantity updated in the quote' : 'added to quote').replace(/^a/, n > 1 ? 'a' : 'A'));
+});
+$('gstOn').addEventListener('change', (e) => { gstOn = e.target.checked; renderQuote(); });
+$('qClose').addEventListener('click', () => { if ($('quote').classList.contains('full')) setFull(false); setQuoteOpen(false); $('qTab').focus(); });
+$('qTab').addEventListener('click', () => { setQuoteOpen(true); $('qClose').focus(); });
+const CUST = ['custRef', 'custName', 'custEmail', 'custPhone'];
+CUST.forEach((id) => {
+  const el = $(id); el.value = store.get('wt_' + id, '');
+  el.addEventListener('input', () => store.set('wt_' + id, el.value));
+});
+
+/* two-tap confirm (browser pop-ups are blocked inside the hosted page) */
+function armTwoTap(btn, label, armedLabel, action) {
+  let t = null;
+  const disarm = () => { clearTimeout(t); t = null; btn.textContent = label; btn.classList.remove('armed'); };
+  btn.addEventListener('click', () => {
+    if (!t) { btn.textContent = armedLabel; btn.classList.add('armed'); t = setTimeout(disarm, 3000); return; }
+    disarm(); action();
+  });
+}
+/* Clear quote: removes the items only; project and customer details stay */
+armTwoTap($('qClear'), 'Clear quote', 'Tap again to clear', () => {
+  quote = []; editIdx = null; quoteNum = 'Q-' + Math.floor(1000 + Math.random() * 9000);
+  $('loadReport').hidden = true;
+  renderQuote(); toast('Items cleared. Customer details kept. Starting ' + quoteNum);
+});
+$('qClear').addEventListener('click', (e) => { if (!quote.length) { e.stopImmediatePropagation(); toast('There are no items to clear'); } }, true);
+/* Clear customer details */
+armTwoTap($('clearDetails'), 'Clear details', 'Tap again', () => {
+  CUST.forEach((id) => { $(id).value = ''; $(id).classList.remove('warn'); store.set('wt_' + id, ''); });
+  $('metaHint').hidden = true; markNeedName(false); toast('Customer details cleared');
+});
+$('clearDetails').addEventListener('click', (e) => {
+  if (!CUST.some((id) => $(id).value.trim())) { e.stopImmediatePropagation(); toast('No customer details to clear'); }
+}, true);
+
+/* PDF file name: "Project-Customer", or whichever one is filled in */
+function pdfName() {
+  const clean = (v) => v.trim().replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const parts = [clean($('custRef').value), clean($('custName').value)].filter(Boolean);
+  return parts.length ? parts.join('-') : 'Quote ' + quoteNum;
+}
+function checkContact() {
+  const em = $('custEmail').value.trim(), ph = $('custPhone').value.trim(), msgs = [];
+  if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) msgs.push('Email looks incomplete');
+  if (ph && ph.replace(/\D/g, '').length < 8) msgs.push('Phone number looks short');
+  $('custEmail').classList.toggle('warn', msgs.some((m) => m.startsWith('Email')));
+  $('custPhone').classList.toggle('warn', msgs.some((m) => m.startsWith('Phone')));
+  const h = $('metaHint'); h.hidden = !msgs.length; h.textContent = msgs.join('. ') + (msgs.length ? '. You can still save the quote.' : '');
+}
+['custEmail', 'custPhone'].forEach((id) => $(id).addEventListener('blur', checkContact));
+['custEmail', 'custPhone'].forEach((id) => $(id).addEventListener('input', () => { if (!$('metaHint').hidden) checkContact(); }));
+function hasName() { return !!($('custRef').value.trim() || $('custName').value.trim()); }
+function markNeedName(on) {
+  ['custRef', 'custName'].forEach((id) => $(id).classList.toggle('warn', on));
+  $('needName').classList.toggle('err', on);
+}
+['custRef', 'custName'].forEach((id) => $(id).addEventListener('input', () => { if (hasName()) markNeedName(false); }));
+
+/* Full-screen quote view */
+function setFull(on) {
+  const q = $('quote');
+  if (on) setQuoteOpen(true);
+  q.classList.toggle('full', on);
+  document.body.classList.toggle('quote-full', on);
+  $('fsBtn').setAttribute('aria-pressed', String(on));
+  $('fsBtn').title = on ? 'Exit full screen' : 'Expand quote to full screen';
+  $('fsBtn').querySelector('.fslabel').textContent = on ? 'Exit full screen' : 'Full screen';
+  q.querySelector('.qbody').scrollTop = 0;
+  if (typeof syncNav === 'function') setTimeout(syncNav, 0);
+}
+$('fsBtn').addEventListener('click', () => setFull(!$('quote').classList.contains('full')));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('quote').classList.contains('full')) setFull(false); });
+
+/* ---------- quote data carried inside the saved PDF (same format as the Quote Builder, so either page can open it) ---------- */
+const QB_CODE = { WT46: 'lWT46' };
+const fromQbCode = (c) => (c === 'lWT46' ? 'WT46' : c);
+function encodeQuoteData() {
+  const data = { v: 1, num: quoteNum, gst: gstOn,
+    project: $('custRef').value.trim(), customer: $('custName').value.trim(), email: $('custEmail').value.trim(), phone: $('custPhone').value.trim(),
+    items: quote.map((q) => {
+      if (isCustom(q)) return { brand: q.brand || 'kitchenwhiz', cat: 'Custom', name: q.name, size: '', code: q.code || '', price: q.price, qty: q.qty, addons: [] };
+      if (!isWT(q)) return { brand: 'kitchenwhiz', cat: q.cat, name: q.xname, size: q.size, code: q.code, price: q.price, qty: q.qty, addons: q.addons.map((a) => a.code) };
+      const row = rowOf(q);
+      return { brand: 'kitchenwhiz', cat: 'Work Table', name: 'Worktable with ' + (row ? row.d : '') + 'mm depth', size: q.size, code: QB_CODE[q.code] || q.code, price: q.price, qty: q.qty, addons: q.addons.map((a) => a.code) };
+    }) };
+  const bytes = new TextEncoder().encode(JSON.stringify(data));
+  let bin = ''; bytes.forEach((b) => { bin += String.fromCharCode(b); });
+  return btoa(bin);
+}
+function decodeQuoteData(b64) {
+  const bin = atob(b64), bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+/* Q-7778 -> Q-7778-1 -> Q-7778-2 ... : same quote, next iteration */
+function nextIteration(num) {
+  if (!num) return null;
+  const m = String(num).match(/^(Q-\d+)(?:-(\d+))?$/);
+  if (!m) return num + '-1';
+  return m[1] + '-' + (parseInt(m[2] || '0', 10) + 1);
+}
+function loadQuoteData(data) {
+  const skipped = [], repriced = [], items = [];
+  (data.items || []).forEach((it) => {
+    if (it.cat === 'Custom') { items.push({ cat: 'Custom', brand: it.brand || 'kitchenwhiz', name: it.name, size: '', code: it.code || '', price: it.price, addons: [], qty: it.qty || 1 }); return; }
+    if (!(it.cat === 'Work Table' && String(it.name || '').indexOf('Worktable with') === 0)) {
+      const pv = it.brand === 'kitchenwhiz' ? findVariant(it.code) : null;
+      if (!pv) { skipped.push((it.name || 'Item') + (it.code ? ' (' + it.code + ')' : '')); return; }
+      const addons = pv.p.addons.filter((a) => (it.addons || []).includes(a.code) && pv.v.ad[a.code] != null)
+        .map((a) => ({ code: a.code, label: a.name + (a.name === a.code ? '' : ' (' + a.code + ')'), price: pv.v.ad[a.code], replace: a.replace }));
+      (it.addons || []).filter((c) => !addons.some((a) => a.code === c)).forEach((c) => skipped.push('add-on ' + c + ' on ' + pv.v.code));
+      if (it.price !== pv.v.price) repriced.push(pv.v.code + ': ' + money(it.price) + ' \u2192 ' + money(pv.v.price));
+      items.push(itemFor(pv.p, pv.v, addons, it.qty || 1));
+      return;
+    }
+    const dims = String(it.size || '').split('x').map(Number);
+    const row = (it.brand === 'kitchenwhiz' && it.cat === 'Work Table')
+      ? (TABLES.find((t) => t.code === fromQbCode(it.code)) || TABLES.find((t) => t.l === dims[0] && t.d === dims[1]))
+      : null;
+    if (!row) { skipped.push((it.name || 'Item') + (it.code ? ' (' + it.code + ')' : '')); return; }
+    const addons = [];
+    ADDONS.forEach((a, i) => { if ((it.addons || []).includes(a.code)) addons.push({ code: a.code, label: a.name + ' (' + a.code + ')', price: row.a[i] }); });
+    (it.addons || []).filter((c) => !ADDONS.some((a) => a.code === c)).forEach((c) => skipped.push('add-on ' + c + ' on ' + row.code));
+    if (it.price !== row.p) repriced.push(row.code + ': ' + money(it.price) + ' \u2192 ' + money(row.p));
+    items.push({ pid: 'worktable', cat: 'Work Table', brand: 'kitchenwhiz', name: 'Work table', size: row.l + 'x' + row.d + 'x850', code: row.code, price: row.p, addons: addons, qty: it.qty || 1 });
+  });
+  quote = items; editIdx = null;
+  quoteNum = nextIteration(data.num) || quoteNum;
+  gstOn = data.gst !== false;
+  $('custRef').value = data.project || ''; $('custName').value = data.customer || '';
+  $('custEmail').value = data.email || ''; $('custPhone').value = data.phone || '';
+  CUST.forEach((id) => store.set('wt_' + id, $(id).value));
+  markNeedName(false); $('metaHint').hidden = true;
+  renderQuote();
+  return { skipped: skipped, repriced: repriced, count: items.length };
+}
+function showLoadReport(r) {
+  const box = $('loadReport');
+  const parts = ['Loaded ' + r.count + ' line' + (r.count === 1 ? '' : 's') + ' from the saved quote. This is now ' + quoteNum + '.'];
+  if (r.repriced.length) parts.push('Prices updated to the current price list: ' + r.repriced.join('; ') + '.');
+  if (r.skipped.length) parts.push('Not in this price list, so left out: ' + r.skipped.join('; ') + '.');
+  box.textContent = parts.join(' ');
+  box.classList.toggle('warn', !!(r.repriced.length || r.skipped.length));
+  box.hidden = false;
+}
+$('loadQuoteBtn').addEventListener('click', () => $('quoteFile').click());
+$('quoteFile').addEventListener('change', (e) => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    const bytes = new Uint8Array(r.result); let txt = '';
+    for (let i = 0; i < bytes.length; i += 65536) txt += String.fromCharCode.apply(null, bytes.subarray(i, i + 65536));
+    const m = txt.match(/QBDATA1:([A-Za-z0-9+\/=]+):QBEND/);
+    if (!m) { toast("This PDF wasn't saved from this page or the Quote Builder"); return; }
+    let data; try { data = decodeQuoteData(m[1]); } catch (err) { toast("Couldn't read the quote inside this PDF"); return; }
+    const had = quote.length;
+    showLoadReport(loadQuoteData(data));
+    setQuoteOpen(true);
+    toast(had ? 'Saved quote loaded. It replaced the items that were here' : 'Saved quote loaded');
+  };
+  r.readAsArrayBuffer(f);
+});
+
+/* ---------- Save PDF: a real PDF file, built in the page ---------- */
+const JSPDF_URL = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+const AUTOTABLE_URL = 'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js';
+const loadScript = (src) => new Promise((res, rej) => {
+  if (document.querySelector('script[src="' + src + '"]')) return res();
+  const sc = document.createElement('script'); sc.src = src; sc.onload = res; sc.onerror = () => rej(new Error('load ' + src)); document.head.appendChild(sc);
+});
+let pdfLibs = null;
+const getPdfLibs = () => pdfLibs || (pdfLibs = loadScript(JSPDF_URL).then(() => loadScript(AUTOTABLE_URL)).catch((e) => { pdfLibs = null; throw e; }));
+let downloadsNs;   // undefined = not asked yet, null = not available in this view
+const getDownloads = async () => {
+  if (downloadsNs !== undefined) return downloadsNs;
+  try { downloadsNs = window.claude && window.claude.use ? await window.claude.use('downloads') : null; } catch (e) { downloadsNs = null; }
+  return downloadsNs;
+};
+getDownloads();
+const logoPng = (key) => new Promise((res) => {
+  const img = new Image();
+  img.onload = () => { const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0); res({ data: c.toDataURL('image/png'), w: img.naturalWidth, h: img.naturalHeight }); };
+  img.onerror = () => res(null);
+  img.src = 'data:image/webp;base64,' + LOGOS[key];
+});
+const rs = (n) => 'Rs. ' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+async function buildPdf() {
+  await getPdfLibs();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  doc.setProperties({ title: pdfName(), subject: 'Quote ' + quoteNum, creator: 'Quote Builder', keywords: 'QBDATA1:' + encodeQuoteData() + ':QBEND' });
+  const W = doc.internal.pageSize.getWidth(), M = 14;
+  let y = M;
+  const l = null, logoH = 16;
+  if (l) doc.addImage(l.data, 'PNG', M, y, logoH * l.w / l.h, logoH);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(20); doc.setTextColor(28, 34, 39);
+  doc.text('QUOTATION', W - M, y + 7, { align: 'right' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(94, 103, 112);
+  doc.text('Quote ' + quoteNum, W - M, y + 13, { align: 'right' });
+  doc.text(new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }), W - M, y + 18, { align: 'right' });
+  y += logoH + 8;
+  const det = [['Project', $('custRef').value.trim()], ['Customer', $('custName').value.trim()], ['Email', $('custEmail').value.trim()], ['Phone', $('custPhone').value.trim()]].filter((r) => r[1]);
+  doc.setFontSize(10);
+  det.forEach(([k, v]) => { doc.setFont('helvetica', 'bold'); doc.setTextColor(94, 103, 112); doc.text(k, M, y); doc.setFont('helvetica', 'normal'); doc.setTextColor(28, 34, 39); doc.text(v, M + 22, y); y += 5.5; });
+  y += 3;
+  const body = quote.map((q, i) => {
+    const lines = [(q.code ? 'Item code: ' + q.code : ''), q.name, isCustom(q) ? 'Custom item' : catLabel(q.cat) + ', ' + q.size + ' mm (L x D x H)'];
+    const priceLines = ['', rs(q.price), ''];
+    q.addons.forEach((a) => { lines.push(a.replace ? a.label + ' (replaces base price)' : '+ ' + a.label); priceLines.push(rs(a.price)); });
+    if (q.code) lines.push('Final item code: ' + finalCode(q));
+    return [String(i + 1), lines.join('\n'), priceLines.join('\n'), String(q.qty), rs(unitOf(q)), rs(unitOf(q) * q.qty)];
+  });
+  doc.autoTable({
+    startY: y, margin: { left: M, right: M },
+    head: [['#', 'Item', 'Base / add-ons', 'Qty', 'Unit price', 'Amount']],
+    body: body,
+    styles: { font: 'helvetica', fontSize: 9, cellPadding: 2.4, textColor: [28, 34, 39], lineColor: [205, 211, 216], lineWidth: 0.1, valign: 'top' },
+    headStyles: { fillColor: [28, 34, 39], textColor: 255, fontStyle: 'bold' },
+    columnStyles: { 0: { cellWidth: 8 }, 1: { cellWidth: 'auto' }, 2: { cellWidth: 28, halign: 'right' }, 3: { cellWidth: 12, halign: 'center' }, 4: { cellWidth: 27, halign: 'right' }, 5: { cellWidth: 29, halign: 'right', fontStyle: 'bold' } }
+  });
+  y = doc.lastAutoTable.finalY + 6;
+  const subtotal = quote.reduce((t, q) => t + unitOf(q) * q.qty, 0), gst = gstOn ? subtotal * 0.18 : 0;
+  const rows = [['Subtotal', rs(subtotal)]]; if (gstOn) rows.push(['GST 18%', rs(gst)]); rows.push(['Total', rs(subtotal + gst)]);
+  if (y + rows.length * 7 + 10 > doc.internal.pageSize.getHeight() - M) { doc.addPage(); y = M; }
+  rows.forEach(([k, v], i) => {
+    const last = i === rows.length - 1;
+    if (last) { doc.setDrawColor(28, 34, 39); doc.setLineWidth(0.5); doc.line(W - M - 80, y - 4.5, W - M, y - 4.5); }
+    doc.setFont('helvetica', last ? 'bold' : 'normal'); doc.setFontSize(last ? 13 : 10); doc.setTextColor(28, 34, 39);
+    doc.text(k, W - M - 80, y); doc.text(v, W - M, y, { align: 'right' }); y += last ? 8 : 6;
+  });
+  const n = doc.getNumberOfPages();
+  for (let pg = 1; pg <= n; pg++) { doc.setPage(pg); doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(140, 148, 156);
+    doc.text('Quote ' + quoteNum + '   |   Page ' + pg + ' of ' + n, W / 2, doc.internal.pageSize.getHeight() - 7, { align: 'center' }); }
+  return doc;
+}
+function readyToSend() {
+  if (!hasName()) { markNeedName(true); $('custRef').focus(); toast('Add a project or customer name first'); return false; }
+  if (!quote.length) { toast('Add at least one item first'); return false; }
+  return true;
+}
+async function makePdf() {
+  const doc = await buildPdf();
+  return { doc: doc, filename: pdfName() + '.pdf', blob: doc.output('blob') };
+}
+async function offerDownload(pdf, okMsg) {
+  const dl = await getDownloads();
+  if (dl) {
+    try { await dl.save({ filename: pdf.filename, data: pdf.blob }); if (okMsg) toast(okMsg); return true; }
+    catch (err) {
+      const c = err && err.code;
+      if (c === 'declined') toast('Save cancelled');
+      else if (c === 'rate_limited') toast('A save is already waiting for you. Try again in a moment');
+      else toast("Couldn't save the PDF here");
+      return false;
+    }
+  }
+  pdf.doc.save(pdf.filename); if (okMsg) toast(okMsg); return true;
+}
+async function withBusy(btn, busyText, fn) {
+  if (btn.disabled) return;
+  btn.disabled = true; const html = btn.innerHTML; btn.textContent = busyText;
+  try { await fn(); } catch (e) { toast("Couldn't prepare the PDF. Check your connection and try again"); }
+  finally { btn.disabled = false; btn.innerHTML = html; }
+}
+$('qPrint').addEventListener('click', () => {
+  if (!readyToSend()) return;
+  withBusy($('qPrint'), 'Preparing PDF\u2026', async () => { await offerDownload(await makePdf(), 'PDF saved'); });
+});
+
+/* ---------- Share: the device share menu with the PDF attached ---------- */
+let pendingShare = null;
+function showShareNote(html) { const n = $('shareNote'); n.innerHTML = html; n.hidden = false; }
+async function shareFile(pdf) {
+  const file = new File([pdf.blob], pdf.filename, { type: 'application/pdf' });
+  if (!(navigator.canShare && navigator.canShare({ files: [file] }))) return 'unsupported';
+  try { await navigator.share({ files: [file], title: pdf.filename.replace(/\.pdf$/, ''), text: 'Quote ' + quoteNum }); return 'ok'; }
+  catch (e) { return e && e.name === 'AbortError' ? 'cancelled' : (e && e.name === 'NotAllowedError' ? 'notallowed' : 'failed'); }
+}
+const shareLabel = (t) => { const sp = $('qShare').querySelector('span'); if (sp) sp.textContent = t; };
+$('qShare').addEventListener('click', async () => {
+  if (pendingShare) {
+    const pdf = pendingShare; pendingShare = null; shareLabel('Share');
+    const r = await shareFile(pdf);
+    if (r === 'ok' || r === 'cancelled') return;
+    showShareNote("This device or browser doesn't allow sharing from this page, so the PDF has been offered as a download instead.");
+    await offerDownload(pdf, 'PDF saved'); return;
+  }
+  if (!readyToSend()) return;
+  withBusy($('qShare'), 'Preparing\u2026', async () => {
+    const pdf = await makePdf();
+    const r = await shareFile(pdf);
+    if (r === 'ok' || r === 'cancelled') return;
+    if (r === 'notallowed') {
+      pendingShare = pdf;
+      setTimeout(() => shareLabel('Tap to share'), 0);
+      toast('PDF ready. Tap Share again to open the share menu');
+      setTimeout(() => { if (pendingShare === pdf) { pendingShare = null; shareLabel('Share'); } }, 20000);
+      return;
+    }
+    showShareNote("This device or browser doesn't allow sharing from this page, so the PDF has been offered as a download instead.");
+    await offerDownload(pdf, 'PDF saved');
+  });
+});
+
+/* ---------- WhatsApp: open a chat with the customer's number, PDF saved to attach ---------- */
+function waNumber() {
+  let d = $('custPhone').value.replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.length === 11 && d.startsWith('0')) d = d.slice(1);
+  if (d.length === 10) d = '91' + d;
+  return d.length >= 11 && d.length <= 15 ? d : null;
+}
+function waMessage() {
+  const sub = quote.reduce((t, q) => t + unitOf(q) * q.qty, 0), total = sub + (gstOn ? sub * 0.18 : 0);
+  const who = $('custName').value.trim(), proj = $('custRef').value.trim();
+  return ['Hello' + (who ? ' ' + who : '') + ',', '', 'Please find attached our quotation ' + quoteNum + (proj ? ' for ' + proj : '') + '.',
+    'Items: ' + quote.length, 'Total: ' + money(total) + (gstOn ? ' (incl. 18% GST)' : ''), '', 'Thank you.'].join('\n');
+}
+$('qWa').addEventListener('click', () => {
+  if (!readyToSend()) return;
+  const num = waNumber();
+  if (!num) { $('custPhone').classList.add('warn'); $('custPhone').focus(); toast("Enter the customer's WhatsApp number in Phone"); return; }
+  const url = 'https://wa.me/' + num + '?text=' + encodeURIComponent(waMessage());
+  const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+  showShareNote('WhatsApp chat for <b>+' + esc(num) + '</b> opened with the message filled in. Save the PDF, then attach it in the chat using the \uD83D\uDCCE button. <a href="' + esc(url) + '" target="_blank" rel="noopener">Open the chat again</a>');
+  withBusy($('qWa'), 'Preparing PDF\u2026', async () => { await offerDownload(await makePdf(), 'PDF saved. Attach it in WhatsApp'); });
+});
+/* warm up the PDF library once there is something to send */
+let warmed = false;
+function warmPdf() { if (!warmed && quote.length) { warmed = true; getPdfLibs().catch(() => { warmed = false; }); } }
+renderQuote();
+setQuoteOpen(store.get('wt_qopen', false) && quote.length > 0);
+
+/* ---------- custom items (Expert mode) ---------- */
+$('addCustom').addEventListener('click', () => {
+  const name = $('cname').value.trim(), code = $('ccode').value.trim(), price = parseFloat($('cprice').value), qty = parseInt($('cqty').value, 10) || 1;
+  if (!name) { toast('Enter an item name'); $('cname').focus(); return; }
+  if (isNaN(price) || price < 0) { toast('Enter a price'); $('cprice').focus(); return; }
+  const same = quote.find((q) => isCustom(q) && q.name === name && (q.code || '') === code && q.price === price);
+  if (same) same.qty += qty; else quote.push({ cat: 'Custom', brand: 'kitchenwhiz', name: name, size: '', code: code, price: price, addons: [], qty: qty });
+  renderQuote(); toast('Added ' + name);
+  $('cname').value = ''; $('ccode').value = ''; $('cprice').value = ''; $('cqty').value = 1;
+});
+
+/* ---------- print (fallback): the file name follows the project and customer ---------- */
+const pageTitle = document.title;
+window.addEventListener('beforeprint', () => { document.title = pdfName(); });
+window.addEventListener('afterprint', () => { document.title = pageTitle; });
+
+/* ---------- floating cart: jump to the quote from anywhere ---------- */
+function updateCartFab() {
+  const fab = $('cartFab');
+  const n = quote.reduce((t, x) => t + x.qty, 0);
+  const sub = quote.reduce((t, x) => t + unitOf(x) * x.qty, 0), tot = sub + (gstOn ? sub * 0.18 : 0);
+  $('cartCount').textContent = n; $('cartCount').hidden = !n;
+  $('cartTotal').textContent = n ? money(tot) : 'Quote';
+  fab.classList.toggle('empty', !n);
+  fab.setAttribute('aria-label', n ? 'Go to quote: ' + n + ' item' + (n === 1 ? '' : 's') + ', ' + money(tot) : 'Go to quote');
+  const open = $('quote').classList.contains('open');
+  fab.classList.toggle('show', !open && (n > 0 || window.scrollY > 200));
+  $('toTop').classList.toggle('lifted', fab.classList.contains('show'));
+}
+$('cartFab').addEventListener('click', () => { setQuoteOpen(true); $('qClose').focus(); });
+$('headCart').addEventListener('click', () => { setQuoteOpen(true); $('qClose').focus(); });
+window.addEventListener('scroll', updateCartFab, { passive: true });
+
+/* ---------- floating Back to top ---------- */
+(() => {
+  const btn = $('toTop');
+  const smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  const upd = () => btn.classList.toggle('show', window.scrollY > 120);
+  window.addEventListener('scroll', upd, { passive: true }); upd();
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: smooth }));
+})();
+
+/* ---------- Customer / Expert mode ---------- */
+/* Modes: Show me the way (this guided page), I can build (Quote Builder, customer mode), Templates (coming soon), Expert (Quote Builder, expert mode). */
+/* "I can build" and "Expert" open the Quote Builder in that mode. The Quote Builder keeps its mode in
+   localStorage ("qb2_mode"), which this page shares when both are served from the same site (GitHub Pages). */
+document.querySelectorAll('.modelink[data-qb-mode]').forEach((a) => a.addEventListener('click', () => {
+  try { localStorage.setItem('qb2_mode', JSON.stringify(a.dataset.qbMode)); } catch (e) {}
+}));
+document.body.classList.remove('expert');
+try { localStorage.removeItem('wt_mode'); } catch (e) {}
+
+/* ---------- phone Back button closes full screen, then the quote tray ---------- */
+let navRestoring = false, navReady = false;
+function navState() { return { wt: 1, open: $('quote').classList.contains('open'), full: $('quote').classList.contains('full') }; }
+function syncNav() {
+  if (navRestoring || !navReady) return;
+  const st = navState(), cur = history.state;
+  if (cur && cur.wt && JSON.stringify(cur) === JSON.stringify(st)) return;
+  try { history.pushState(st, ''); } catch (e) {}
+}
+window.addEventListener('popstate', (e) => {
+  const st = e.state;
+  if (!st || !st.wt) return;
+  navRestoring = true;
+  if ($('quote').classList.contains('full') !== !!st.full) setFull(!!st.full);
+  setQuoteOpen(!!st.open);
+  setTimeout(() => { navRestoring = false; }, 0);
+});
+updateCartFab();
+try { history.replaceState(navState(), ''); } catch (e) {}
+navReady = true;
+
+/* ---------- categories tray (left side): Catalogue major categories, same as the Quote Builder ---------- */
+const CAT_IMGS = {"Work Table":"","SINK":"","BURNER":"","HOT PLATE/GRIDDLE PLATE":"","Griller":"","TANDOOR":"","CABINET/ SHELF":"","Dish Washing":"","Cold Section":""};
+const CATEGORIES = [
+  { key: 'Work Table', label: 'Work Table', abbr: 'Work Table', here: true },
+  { key: 'SINK', label: 'Sink', abbr: 'Sink' },
+  { key: 'BURNER', label: 'Burner', abbr: 'Burner' },
+  { key: 'HOT PLATE/GRIDDLE PLATE', label: 'Hot Plate / Griddle Plate', abbr: 'Hot Plate' },
+  { key: 'Griller', label: 'Griller', abbr: 'Griller' },
+  { key: 'TANDOOR', label: 'Tandoor', abbr: 'Tandoor' },
+  { key: 'CABINET/ SHELF', label: 'Cabinet / Shelf', abbr: 'Cabinet' },
+  { key: 'Dish Washing', label: 'Dish Washing', abbr: 'Dish Wash' },
+  { key: 'Cold Section', label: 'Cold Section', abbr: 'Cold' }
+];
+CATEGORIES.forEach((c) => {
+  const el = document.createElement('button');
+  el.className = 'cat';
+  el.innerHTML = '<span class="cimg"><img src="data:image/webp;base64,' + CAT_IMGS[c.key] + '" alt=""></span><span class="cname">' + c.label + '</span><span class="cabbr" aria-hidden="true">' + c.abbr + '</span>';
+  el.title = c.label;
+  el.dataset.cat = c.key;
+  el.addEventListener('click', () => { location.hash = '#/c/' + catSlug(c.key); foldCats(); });
+  $('catList').appendChild(el);
+});
+/* Categories tray states:
+   'none'   – not shown at all until a brand is first selected (or the catalogue is opened);
+   'open'   – full tray; 'mini' – image + short name rail; 'closed' – hidden, tab on the edge.
+   A click on the page or on a category folds it to mini unless it is pinned.
+   Hovering the mini rail opens it temporarily (peek). The closed tray only reopens from its tab. */
+let catsState = 'none';
+let catsPinned = false;
+let peeking = false;
+function paintCats() {
+  const p = $('cats'), st = catsState, full = st === 'open' || peeking;
+  p.classList.toggle('open', full);
+  p.classList.toggle('mini', st === 'mini' && !peeking);
+  p.classList.toggle('peek', peeking);
+  p.inert = st === 'closed' && !peeking || st === 'none';
+  $('cTab').inert = st !== 'closed';
+  document.body.classList.toggle('cats-open', st === 'open');
+  document.body.classList.toggle('cats-mini', st === 'mini');
+  document.body.classList.toggle('cats-none', st === 'none');
+  $('cPin').setAttribute('aria-pressed', String(catsPinned));
+  $('cPin').title = catsPinned ? 'Unpin' : 'Pin open';
+  $('cPin').setAttribute('aria-label', catsPinned ? 'Unpin categories' : 'Pin categories open');
+}
+function setCats(st) { catsState = st; peeking = false; paintCats(); }
+function foldCats() { if (!catsPinned && (catsState === 'open' || peeking)) { peeking = false; if (catsState === 'open') catsState = 'mini'; paintCats(); } }
+function peekCats(on) {
+  if (catsState !== 'mini' && on) return;   /* hover only opens the mini rail, never the closed tray */
+  if (peeking === on) return;
+  peeking = on; paintCats();
+}
+$('cClose').addEventListener('click', (e) => { e.stopPropagation(); catsPinned = false; setCats('closed'); $('cTab').focus(); });
+$('cPin').addEventListener('click', (e) => { e.stopPropagation(); catsPinned = !catsPinned; setCats(catsPinned ? 'open' : 'open'); toast(catsPinned ? 'Categories pinned open' : 'Categories unpinned'); });
+$('cTab').addEventListener('click', (e) => { e.stopPropagation(); setCats('open'); $('cClose').focus(); });
+$('cats').addEventListener('click', (e) => { if (catsState === 'mini' && !peeking && !e.target.closest('button')) setCats('open'); });
+const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+if (canHover) {
+  let leaveT = null;
+  const enter = () => { clearTimeout(leaveT); peekCats(true); };
+  const leave = () => { clearTimeout(leaveT); leaveT = setTimeout(() => peekCats(false), 250); };
+  $('cats').addEventListener('mouseenter', enter);
+  $('cats').addEventListener('mouseleave', leave);
+}
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#cats, #cTab, #brands')) return;
+  foldCats();
+});
+function revealCats(st) { if (catsState === 'none') setCats(st); }
+window.openCategoriesForBrand = () => setCats('open');   /* call when the brand changes */
+paintCats();
+
+/* ---------- catalogue: every Catalogue product from the price list, with catalogue renders ---------- */
+const CATALOG = [];
+const WT_IMG = '';
+const catSlug = (k) => k.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+function catLabel(k) { return ({ 'Work Table': 'Work Table', 'SINK': 'Sink', 'BURNER': 'Burner', 'HOT PLATE/GRIDDLE PLATE': 'Hot Plate / Griddle Plate', 'Griller': 'Griller', 'TANDOOR': 'Tandoor', 'CABINET/ SHELF': 'Cabinet / Shelf', 'Dish Washing': 'Dish Washing', 'Cold Section': 'Cold Section' })[k] || k; }
+function findVariant(code) {
+  for (const p of CATALOG) { const v = p.variants.find((x) => x.code === code); if (v) return { p: p, v: v }; }
+  return null;
+}
+const minPrice = (p) => Math.min.apply(null, p.variants.map((v) => v.price));
+const showDims = (sz) => String(sz).replace(/x/gi, ' \u00D7 ');
+function itemFor(p, v, addons, qty) {
+  return { pid: p.id, cat: p.cat, brand: 'kitchenwhiz', name: p.title, xname: p.xname, size: v.size, code: v.code, price: v.price, addons: addons, qty: qty };
+}
+function productsIn(catKey) {
+  const list = CATALOG.filter((p) => p.cat === catKey).map((p) => ({ href: '#/p/' + p.id, title: p.title, img: p.imgs[0], from: minPrice(p), n: p.variants.length }));
+  if (catKey === 'Work Table') list.unshift({ href: '#/p/worktable', title: 'Work table', img: WT_IMG, from: Math.min.apply(null, TABLES.map((t) => t.p)), n: TABLES.length, tag: 'Guided' });
+  return list;
+}
+function cardHTML(x) {
+  return '<a class="pcard" href="' + x.href + '"><span class="pimg"><img src="data:image/webp;base64,' + x.img + '" alt="" loading="lazy"></span>' +
+    '<span class="pmeta">' + (x.tag ? '<span class="ptag">' + x.tag + '</span>' : '') + '<span class="pname">' + esc(x.title) + '</span>' +
+    '<span class="pfrom">' + x.n + (x.n === 1 ? ' size' : ' sizes') + ' \u00B7 from ' + inr(x.from) + '</span></span></a>';
+}
+function showCategory(catKey) {
+  const list = productsIn(catKey);
+  $('cCrumb').innerHTML = '<a href="#/home">Home</a> / ' + esc(catLabel(catKey));
+  $('cHead').textContent = catLabel(catKey);
+  $('cSub').textContent = list.length + (list.length === 1 ? ' product' : ' products') + '. Prices exclude GST.';
+  $('pgrid').innerHTML = list.map(cardHTML).join('');
+  document.title = catLabel(catKey) + ' \u2013 feedback preview';
+}
+function showHome() {
+  $('cCrumb').textContent = 'Home';
+  $('cHead').textContent = 'Catalogue products';
+  $('cSub').textContent = 'Choose a category. Prices exclude GST.';
+  $('pgrid').innerHTML = CATEGORIES.map((c) => {
+    const list = productsIn(c.key);
+    return cardHTML({ href: list.length === 1 ? list[0].href : '#/c/' + catSlug(c.key), title: c.label, img: CAT_IMGS[c.key], from: Math.min.apply(null, list.map((x) => x.from)), n: list.length }).replace(/ sizes? \u00B7/, list.length === 1 ? ' product \u00B7' : ' products \u00B7');
+  }).join('');
+  document.title = 'Catalogue products \u2013 feedback preview';
+}
+
+/* product page */
+const PNEEDS = { U2: 'U1' };
+const pState = { p: null, vi: 0, picked: {}, qty: 1, img: 0 };
+function showProduct(p) {
+  if (pState.p !== p) { pState.p = p; pState.vi = 0; pState.picked = {}; pState.qty = 1; pState.img = p.baseImg || 0; viewForVariant(); }
+  $('pCrumb').innerHTML = '<a href="#/home">Home</a> / <a href="#/c/' + catSlug(p.cat) + '">' + esc(catLabel(p.cat)) + '</a> / ' + esc(p.title);
+  $('pTitle').textContent = p.title;
+  $('pCount').textContent = p.variants.length + (p.variants.length === 1 ? ' size' : ' sizes');
+  $('pSpecs').innerHTML = p.specs.map((t) => '<li>' + esc(t) + '</li>').join('');
+  $('pNotes').innerHTML = p.notes.map((t) => '<li>' + esc(t) + '</li>').join('');
+  $('pNotesWrap').hidden = !p.notes.length;
+  $('pLegend').textContent = p.legend ? 'Code key \u2013 ' + p.legend : '';
+  $('gThumbs').innerHTML = p.imgs.length > 1 ? p.imgs.map((b, i) => '<button aria-label="View ' + (i + 1) + ' of ' + p.imgs.length + '" data-i="' + i + '"><img src="data:image/webp;base64,' + b + '" alt=""></button>').join('') : '';
+  $('gThumbs').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { pState.img = +b.dataset.i; renderProduct(); }));
+  $('pSizes').innerHTML = p.variants.map((v, i) => '<button class="vrow" role="radio" data-i="' + i + '"><span class="dot" aria-hidden="true"></span><span class="vc">' + esc(v.code) + '</span>' +
+    '<span class="vs">' + showDims(v.size) + ' mm' + (v.sink ? '<small>Sink ' + showDims(v.sink) + ' mm</small>' : '') + '</span><span class="vp">' + inr(v.price) + '</span></button>').join('');
+  $('pSizes').querySelectorAll('.vrow').forEach((b) => b.addEventListener('click', () => { pState.vi = +b.dataset.i; viewForVariant(); renderProduct(); }));
+  $('pAddWrap').hidden = !p.addons.length;
+  $('pAddons').innerHTML = p.addons.map((a) => '<button class="card" data-code="' + esc(a.code) + '"><div class="box">' + CHECK + '</div>' +
+    '<span class="txt"><span class="nm"><b>' + esc(a.name) + '</b>' + (a.name === a.code ? '' : '<span class="mono">' + esc(a.code) + '</span>') + '</span><span class="ds">' + esc(a.desc) + '</span>' +
+    (PNEEDS[a.code] && p.addons.some((x) => x.code === PNEEDS[a.code]) ? '<span class="need">Add the ' + esc(p.addons.find((x) => x.code === PNEEDS[a.code]).name) + ' first</span>' : '') +
+    '<span class="na" hidden>Not available for this size</span></span><span class="pr mono"></span></button>').join('');
+  $('pAddons').querySelectorAll('.card').forEach((b) => b.addEventListener('click', () => {
+    if (b.getAttribute('aria-disabled') === 'true') return;
+    const c = b.dataset.code, on = !!pState.picked[c];
+    pState.picked[c] = !on;
+    if (on) Object.keys(PNEEDS).forEach((d) => { if (PNEEDS[d] === c) pState.picked[d] = false; });
+    /* products with a render for an add-on (e.g. Single Sink + undershelf) switch the picture to show it */
+    if (p.addonImg && p.addonImg[c] != null) { if (!on) pState.img = p.addonImg[c]; else { pState.img = p.baseImg || 0; viewForVariant(); } }
+    renderProduct();
+  }));
+  document.title = p.title + ' \u2013 feedback preview';
+  renderProduct();
+}
+function productSel() {
+  const p = pState.p, v = p.variants[pState.vi];
+  const opts = [];
+  p.addons.forEach((a) => {
+    const avail = v.ad[a.code] != null;
+    const need = PNEEDS[a.code] && p.addons.some((x) => x.code === PNEEDS[a.code]) ? PNEEDS[a.code] : null;
+    const locked = !avail || (need && !pState.picked[need]);
+    if (locked) pState.picked[a.code] = false;
+    opts.push({ a: a, avail: avail, locked: locked, on: !!pState.picked[a.code], price: avail ? v.ad[a.code] : 0 });
+  });
+  return { p: p, v: v, opts: opts };
+}
+function renderProduct() {
+  const { p, v, opts } = productSel();
+  $('gMain').src = 'data:image/webp;base64,' + p.imgs[pState.img];
+  fitStage(); drawDims(p, v);
+  $('gMain').alt = p.title + (p.imgs.length > 1 ? ' (view ' + (pState.img + 1) + ' of ' + p.imgs.length + ')' : '');
+  $('gThumbs').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.i === pState.img)));
+  $('pSizes').querySelectorAll('.vrow').forEach((b) => { const on = +b.dataset.i === pState.vi; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+  $('pCode').textContent = v.code;
+  $('pFor').textContent = v.code;
+  const rep = opts.find((o) => o.on && o.a.replace);
+  const base = rep ? rep.price : v.price;
+  const unit = base + opts.filter((o) => o.on && !o.a.replace).reduce((t, o) => t + o.price, 0);
+  $('pPrice').textContent = inr(base);
+  opts.forEach((o) => {
+    const b = $('pAddons').querySelector('.card[data-code="' + CSS.escape(o.a.code) + '"]');
+    b.setAttribute('aria-pressed', String(o.on));
+    b.setAttribute('aria-disabled', String(o.locked));
+    b.querySelector('.pr').textContent = o.avail ? (o.a.replace ? '= ' : '+ ') + inr(o.price) : '';
+    const na = b.querySelector('.na'); if (na) na.hidden = o.avail;
+    const nd = b.querySelector('.need'); if (nd) nd.style.display = o.avail && o.locked ? 'block' : 'none';
+  });
+  const n = opts.filter((o) => o.on).length;
+  $('pCountSel').textContent = p.addons.length ? (n === 0 ? 'No add-ons selected' : n === 1 ? '1 add-on selected' : n + ' add-ons selected') : '';
+  $('pTotal').textContent = inr(unit * pState.qty);
+  $('pEach').textContent = pState.qty > 1 ? pState.qty + ' \u00D7 ' + inr(unit) + ' each' : '';
+  $('pqIn').value = pState.qty; $('pqDec').disabled = pState.qty <= 1;
+}
+$('pSizes').addEventListener('keydown', (e) => {
+  if (!pState.p || !['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+  e.preventDefault();
+  const n = pState.p.variants.length, d = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
+  pState.vi = (pState.vi + d + n) % n; viewForVariant(); renderProduct();
+  const b = $('pSizes').querySelector('.vrow[data-i="' + pState.vi + '"]'); if (b) { b.focus(); b.scrollIntoView({ block: 'nearest' }); }
+});
+$('pqDec').addEventListener('click', () => { if (pState.qty > 1) { pState.qty--; renderProduct(); } });
+$('pqInc').addEventListener('click', () => { pState.qty++; renderProduct(); });
+$('pqIn').addEventListener('change', (e) => { const x = parseInt(e.target.value, 10); pState.qty = x > 0 ? Math.min(x, 999) : 1; renderProduct(); });
+$('pAdd').addEventListener('click', () => {
+  const { p, v, opts } = productSel();
+  const addons = opts.filter((o) => o.on).map((o) => ({ code: o.a.code, label: o.a.name + (o.a.name === o.a.code ? '' : ' (' + o.a.code + ')'), price: o.price, replace: o.a.replace }));
+  const item = itemFor(p, v, addons, pState.qty);
+  const same = quote.find((q) => q.pid === p.id && finalCode(q) === finalCode(item));
+  const n = pState.qty;
+  if (same) same.qty += n; else quote.push(item);
+  pState.qty = 1; renderProduct();
+  renderQuote(); setQuoteOpen(true);
+  toast((n > 1 ? n + ' \u00D7 ' : '') + p.title + (same ? ' \u2013 quantity updated in the quote' : ' added to quote'));
+});
+
+/* routing: #/home, #/c/<category>, #/p/<product>; no hash = the guided work table */
+function route() {
+  const h = location.hash.replace(/^#\/?/, '');
+  const [kind, id] = h.split('/');
+  let view = 'wt', cat = 'Work Table';
+  if (kind === 'home') { view = 'cat'; cat = null; showHome(); }
+  else if (kind === 'c') {
+    const c = CATEGORIES.find((x) => catSlug(x.key) === id);
+    if (c) {
+      const only = productsIn(c.key);
+      if (only.length === 1) { history.replaceState(history.state, '', only[0].href); return route(); }   /* one product: go straight to it */
+      view = 'cat'; cat = c.key; showCategory(c.key);
+    }
+  }
+  else if (kind === 'p' && id && id !== 'worktable') { const p = CATALOG.find((x) => x.id === id); if (p) { view = 'prod'; cat = p.cat; showProduct(p); } }
+  if (view === 'wt') document.title = 'Work table';
+  if (view !== 'wt') revealCats('mini');
+  $('viewWT').hidden = view !== 'wt';
+  $('viewCat').hidden = view !== 'cat';
+  $('viewProd').hidden = view !== 'prod';
+  if (view === 'prod') requestAnimationFrame(() => { fitStage(); drawDims(pState.p, pState.p.variants[pState.vi]); });
+  document.querySelectorAll('#catList .cat').forEach((b) => { if (b.dataset.cat === cat) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  window.scrollTo({ top: 0 });
+}
+window.addEventListener('hashchange', () => { if (location.hash) history.replaceState(null, '', location.pathname); route(); });
+route();
+
+/* Clicking the current brand in the big brand row: tuck the brands into the top tray and move focus to the categories */
+function brandToTray() {
+  tuckBrands();
+  setCats('open');
+  $('cats').classList.remove('flashc'); void $('cats').offsetWidth; $('cats').classList.add('flashc'); setTimeout(() => $('cats').classList.remove('flashc'), 1000);
+  const target = $('catList').querySelector('.cat[aria-current="page"]') || $('catList').querySelector('.cat');
+  if (target) setTimeout(() => target.focus({ preventScroll: true }), 50);
+  if (typeof openCategoriesForBrand === 'function') openCategoriesForBrand();
+}
+
+/* ---------- L × D × H arrows on the product renders (positions taken from the catalogue PDF's own arrows) ---------- */
+function viewForVariant() {
+  const p = pState.p; if (!p || !p.variantImg) return;
+  const i = p.variantImg[p.variants[pState.vi].code];
+  if (i != null) pState.img = i;
+}
+function fitStage() {
+  const p = pState.p; if (!p) return;
+  const box = $('gBox').getBoundingClientRect(), ar = (p.ar && p.ar[pState.img]) || 1;
+  const k = p.dims && p.dims[pState.img] ? 0.74 : 0.92;
+  let w = box.width * k, h = w / ar;
+  if (h > box.height * k) { h = box.height * k; w = h * ar; }
+  $('gStage').style.width = Math.max(40, w) + 'px'; $('gStage').style.height = Math.max(40, h) + 'px';
+}
+function dimParts(size) {
+  const [L, D, ...rest] = String(size).split(/x/i);
+  return { L: L, D: D, H: rest.join('x') };
+}
+function drawDims(p, v) {
+  const svg = $('gDims'), d = p.dims && p.dims[pState.img];
+  if (!d) { svg.innerHTML = ''; return; }
+  const ar = p.ar[pState.img] || 1, W = 1000, H = W / ar;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  const px = $('gStage').getBoundingClientRect().width || 400;
+  const val = dimParts(v.size), cx = W / 2, cy = H / 2, fs = 13 * W / px;
+  let out = '<defs><marker id="dimHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F4FA0"></path></marker></defs>';
+  ['L', 'D', 'H'].forEach((key) => {
+    const a = d[key]; if (!a) return;
+    const x1 = a[0] * W, y1 = a[1] * H, x2 = a[2] * W, y2 = a[3] * H;
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, len = Math.hypot(x2 - x1, y2 - y1) || 1;
+    let nx = -(y2 - y1) / len, ny = (x2 - x1) / len;
+    if (nx * (mx - cx) + ny * (my - cy) < 0) { nx = -nx; ny = -ny; }
+    const off = fs * 0.95, tx = mx + nx * off, ty = my + ny * off;
+    let ang = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    if (ang >= 90) ang -= 180; if (ang < -90) ang += 180;
+    const txt = key + ' ' + (val[key] || '') + ' mm';
+    out += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="#1F4FA0" stroke-width="2.4" vector-effect="non-scaling-stroke" marker-start="url(#dimHead)" marker-end="url(#dimHead)"></line>' +
+      '<text x="' + tx.toFixed(1) + '" y="' + ty.toFixed(1) + '" font-size="' + fs.toFixed(0) + '" text-anchor="middle" dominant-baseline="middle" transform="rotate(' + ang.toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1) + ')">' + esc(txt) + '</text>';
+  });
+  svg.innerHTML = out;
+}
+window.addEventListener('resize', () => { if (!$('viewProd').hidden && pState.p) { fitStage(); drawDims(pState.p, pState.p.variants[pState.vi]); } });
+</script>
+</body>
+</html>
